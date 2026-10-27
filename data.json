@@ -48,8 +48,8 @@
    "name": "WC operacionais (fase inicial)",
    "start": "2026-10-05",
    "end": "2026-10-24",
-   "pct": 0,
-   "realStart": "",
+   "pct": 20,
+   "realStart": "2026-10-27",
    "realEnd": "",
    "owner": ""
   },
@@ -384,5 +384,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:18:07Z"
+ "updatedAt": "2026-10-27T13:18:13Z"
 }
