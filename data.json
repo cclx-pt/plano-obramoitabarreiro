@@ -344,7 +344,7 @@
   {
    "id": "tmvqqhhty",
    "phase": "f1",
-   "name": "Nova tarefa",
+   "name": "Instalação do Quadro da Regie",
    "owner": "",
    "start": "2026-10-01",
    "end": "2026-10-03",
@@ -406,5 +406,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:41:10Z"
+ "updatedAt": "2026-10-27T13:41:29Z"
 }
