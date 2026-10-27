@@ -86,7 +86,7 @@
    "pct": 100,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "Pedro Jeremias"
   },
   {
    "id": "f1-piso",
@@ -384,5 +384,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:19:27Z"
+ "updatedAt": "2026-10-27T13:19:33Z"
 }
