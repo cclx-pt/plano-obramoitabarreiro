@@ -379,6 +379,18 @@
    "realStart": "",
    "realEnd": "",
    "notes": ""
+  },
+  {
+   "id": "tmvr7isyk",
+   "phase": "f1",
+   "name": "Nova tarefa",
+   "owner": "",
+   "notes": "",
+   "start": "2026-10-01",
+   "end": "2026-10-03",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": ""
   }
  ],
  "milestone": {
@@ -434,5 +446,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T21:37:38Z"
+ "updatedAt": "2026-10-27T21:38:05Z"
 }
