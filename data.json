@@ -36,7 +36,7 @@
    "phase": "f1",
    "name": "Estruturas de pladur montadas",
    "start": "2026-10-01",
-   "end": "2026-10-20",
+   "end": "2026-10-30",
    "pct": 100,
    "realStart": "",
    "realEnd": "",
@@ -406,5 +406,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:41:34Z"
+ "updatedAt": "2026-10-27T13:41:36Z"
 }
