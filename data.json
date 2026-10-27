@@ -1,0 +1,388 @@
+{
+ "phases": [
+  {
+   "id": "f1",
+   "name": "Fase 1 · Outubro",
+   "color": "--p1",
+   "start": "2026-10-01"
+  },
+  {
+   "id": "f2",
+   "name": "Fase 2 · Novembro",
+   "color": "--p2",
+   "start": "2026-11-02"
+  },
+  {
+   "id": "f3",
+   "name": "Fase 3 · Até 20 dez",
+   "color": "--p3",
+   "start": "2026-12-01"
+  }
+ ],
+ "tasks": [
+  {
+   "id": "f1-salas",
+   "phase": "f1",
+   "name": "Salas de cima operacionais",
+   "start": "2026-10-01",
+   "end": "2026-10-24",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-pladur",
+   "phase": "f1",
+   "name": "Estruturas de pladur montadas",
+   "start": "2026-10-01",
+   "end": "2026-10-20",
+   "pct": 100,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-wc",
+   "phase": "f1",
+   "name": "WC operacionais (fase inicial)",
+   "start": "2026-10-05",
+   "end": "2026-10-24",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-quadros",
+   "phase": "f1",
+   "name": "Quadro geral elétrico geral",
+   "start": "2026-10-02",
+   "end": "2026-10-02",
+   "pct": 100,
+   "realStart": "2026-10-27",
+   "realEnd": "2026-10-27",
+   "owner": ""
+  },
+  {
+   "id": "f1-teto-teste",
+   "phase": "f1",
+   "name": "Testar fixação do teto",
+   "note": "feito em avanço",
+   "start": "2026-10-14",
+   "end": "2026-10-16",
+   "pct": 100,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-barras",
+   "phase": "f1",
+   "name": "Instalação das barras de luz",
+   "note": "feito em avanço",
+   "start": "2026-10-16",
+   "end": "2026-10-21",
+   "pct": 100,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-piso",
+   "phase": "f1",
+   "name": "Normalizar piso da sala da ED (em baixo)",
+   "start": "2026-10-20",
+   "end": "2026-10-30",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-luz",
+   "phase": "f1",
+   "name": "Luz do salão",
+   "start": "2026-10-20",
+   "end": "2026-10-30",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-bar",
+   "phase": "f1",
+   "name": "Bar (temporário)",
+   "start": "2026-10-26",
+   "end": "2026-10-31",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f1-limpeza",
+   "phase": "f1",
+   "name": "Limpeza de fim de fase",
+   "start": "2026-10-30",
+   "end": "2026-10-31",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-cabos",
+   "phase": "f2",
+   "name": "Passar cabos para o suporte do teto",
+   "start": "2026-11-02",
+   "end": "2026-11-11",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-regie",
+   "phase": "f2",
+   "name": "Régie",
+   "start": "2026-11-02",
+   "end": "2026-11-13",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-palco",
+   "phase": "f2",
+   "name": "Palco",
+   "start": "2026-11-02",
+   "end": "2026-11-20",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-ponto-luz",
+   "phase": "f2",
+   "name": "Ponto de luz para decoração e TVs de parede",
+   "start": "2026-11-09",
+   "end": "2026-11-13",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-pint-baixo",
+   "phase": "f2",
+   "name": "Lixar e pintar as salas de baixo",
+   "start": "2026-11-09",
+   "end": "2026-11-20",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-pint-salao",
+   "phase": "f2",
+   "name": "Pinturas (salão e entrada)",
+   "start": "2026-11-16",
+   "end": "2026-11-27",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-tela",
+   "phase": "f2",
+   "name": "Tela principal",
+   "start": "2026-11-23",
+   "end": "2026-11-26",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-projetor",
+   "phase": "f2",
+   "name": "Projetor principal",
+   "start": "2026-11-23",
+   "end": "2026-11-27",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f2-limpeza",
+   "phase": "f2",
+   "name": "Limpeza de fim de fase",
+   "start": "2026-11-28",
+   "end": "2026-11-30",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-teto",
+   "phase": "f3",
+   "name": "Montar o teto",
+   "start": "2026-12-01",
+   "end": "2026-12-07",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-portao",
+   "phase": "f3",
+   "name": "Pintar o portão da rua",
+   "start": "2026-12-01",
+   "end": "2026-12-04",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-fachada",
+   "phase": "f3",
+   "name": "Pintar a fachada",
+   "start": "2026-12-01",
+   "end": "2026-12-09",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-alcatifa",
+   "phase": "f3",
+   "name": "Montar a alcatifa",
+   "start": "2026-12-08",
+   "end": "2026-12-11",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-limpeza",
+   "phase": "f3",
+   "name": "Limpeza geral",
+   "start": "2026-12-12",
+   "end": "2026-12-14",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-decoracao",
+   "phase": "f3",
+   "name": "Decoração geral",
+   "start": "2026-12-15",
+   "end": "2026-12-18",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-salas-ed",
+   "phase": "f3",
+   "name": "Preparar salas da ED em baixo (decoração e montagem)",
+   "start": "2026-12-15",
+   "end": "2026-12-18",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-som",
+   "phase": "f3",
+   "name": "Afinar o som",
+   "start": "2026-12-15",
+   "end": "2026-12-17",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  },
+  {
+   "id": "f3-testes",
+   "phase": "f3",
+   "name": "Testes finais",
+   "start": "2026-12-18",
+   "end": "2026-12-20",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "",
+   "owner": ""
+  }
+ ],
+ "milestone": {
+  "name": "Inauguração",
+  "start": "2027-01-04",
+  "end": "2027-01-29",
+  "note": "janeiro, data a decidir"
+ },
+ "deps": [
+  {
+   "before": "f2-cabos",
+   "after": "f3-teto",
+   "why": "Os cabos ficam no suporte antes de fechar o teto."
+  },
+  {
+   "before": "f2-ponto-luz",
+   "after": "f3-teto",
+   "why": "Pontos de luz e cabos das TVs antes do teto."
+  },
+  {
+   "before": "f2-pint-salao",
+   "after": "f3-alcatifa",
+   "why": "Pinturas interiores antes da alcatifa, para não a sujar."
+  },
+  {
+   "before": "f2-pint-baixo",
+   "after": "f3-alcatifa",
+   "why": "Salas de baixo pintadas antes da alcatifa."
+  },
+  {
+   "before": "f3-alcatifa",
+   "after": "f3-limpeza",
+   "why": "Limpeza geral depois de terminadas as obras."
+  },
+  {
+   "before": "f3-limpeza",
+   "after": "f3-decoracao",
+   "why": "Decoração só com a sala limpa."
+  },
+  {
+   "before": "f3-teto",
+   "after": "f3-som",
+   "why": "O teto altera a acústica: afinar o som depois."
+  },
+  {
+   "before": "f3-alcatifa",
+   "after": "f3-som",
+   "why": "A alcatifa altera a acústica: afinar o som depois."
+  },
+  {
+   "before": "f3-som",
+   "after": "f3-testes",
+   "why": "Testes finais com o som já afinado."
+  }
+ ],
+ "updatedAt": "2026-10-27T13:04:19Z"
+}
