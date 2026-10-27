@@ -335,8 +335,8 @@
    "phase": "f1",
    "name": "Pintura do Salão",
    "owner": "",
-   "start": "2026-10-01",
-   "end": "2026-10-03",
+   "start": "2026-10-29",
+   "end": "2026-10-29",
    "pct": 0,
    "realStart": "",
    "realEnd": ""
@@ -395,5 +395,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:40:35Z"
+ "updatedAt": "2026-10-27T13:40:44Z"
 }
