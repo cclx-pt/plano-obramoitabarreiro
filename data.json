@@ -383,7 +383,7 @@
   {
    "id": "tmvr7isyk",
    "phase": "f1",
-   "name": "Nova tarefa",
+   "name": "Colocar tampão no esgoto sala de cima e tamponar torneira",
    "owner": "",
    "notes": "",
    "start": "2026-10-01",
@@ -446,5 +446,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T21:38:05Z"
+ "updatedAt": "2026-10-27T21:38:24Z"
 }
