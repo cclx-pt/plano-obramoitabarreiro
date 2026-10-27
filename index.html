@@ -32,8 +32,14 @@
       d.innerHTML='<b>Versão só de leitura</b><span>'+(u?'Última alteração: '+when(u)+'.':'')+'</span>';lede.after(d)}
   }
   window.PLANO={readOnly:true,message:'Só leitura'};
-  fetch('data.json?t='+Date.now(),{cache:'no-store'})
-    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+  // Lê os dados diretamente do repositório (atualizado no momento em que o admin grava).
+  // Se falhar (ex.: limite de pedidos do GitHub), usa a cópia publicada pelo GitHub Pages.
+  function direct(){return fetch('https://api.github.com/repos/cclx-pt/plano-obramoitabarreiro/contents/data.json?ref=main&t='+Date.now(),
+      {cache:'no-store',headers:{'Accept':'application/vnd.github.raw+json'}})
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+  function pages(){return fetch('data.json?t='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+  direct().catch(pages)
     .then(function(d){
       window.PLANO.data=d;
       var s=document.createElement('script');s.src='app.js?t='+Date.now();
