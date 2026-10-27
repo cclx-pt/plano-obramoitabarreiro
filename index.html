@@ -1,0 +1,326 @@
+<!doctype html><html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="plano-hash" content="234c27fad2fa9880">
+<title>Plano da Obra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<style id="css">
+/* Layout: summary band of three phases, then one wide Gantt (sticky task column, scrolling timeline), then sequence checks, then the editable plan table. */
+:root{
+  --bg:#EDF0F4;--surface:#FFFFFF;--ink:#1A2130;--muted:#5B6476;--line:#D4DAE3;--soft:#E6EAF0;
+  --p1:#2D55C8;--p2:#0E8277;--p3:#B4512A;--ok:#2B7A4B;--warn:#A0650F;--today:#D23B3B;
+  --f-display:"Archivo Narrow","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --lw:250px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11141A;--surface:#191E27;--ink:#E6E9EF;--muted:#98A1B1;--line:#2C3340;--soft:#222935;
+  --p1:#7193F2;--p2:#3CB6A7;--p3:#E38D62;--ok:#5DC28B;--warn:#E3B04B;--today:#FF6B6B;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11141A;--surface:#191E27;--ink:#E6E9EF;--muted:#98A1B1;--line:#2C3340;--soft:#222935;
+  --p1:#7193F2;--p2:#3CB6A7;--p3:#E38D62;--ok:#5DC28B;--warn:#E3B04B;--today:#FF6B6B;color-scheme:dark}
+@media (max-width:640px){:root{--lw:150px}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+#app{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--p1);outline-offset:2px}
+.eyebrow{font:600 11px/1 var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(30px,5vw,44px)/1.02 var(--f-display);margin:10px 0 8px;letter-spacing:-.01em;text-wrap:balance}
+h2{font:700 20px/1.1 var(--f-display);margin:0;letter-spacing:.01em;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:62ch}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:20px}
+.ph{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;gap:6px;min-width:0}
+.ph-name{display:flex;align-items:center;gap:8px;font:700 15px var(--f-display);text-transform:uppercase;letter-spacing:.04em}
+.ph-name i{width:10px;height:10px;background:var(--pc);border-radius:2px;flex:none}
+.ph-dates,.ph-count{font:12px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.ph-bar{height:6px;background:var(--soft);border-radius:3px;overflow:hidden}
+.ph-bar span{display:block;height:100%;background:var(--pc)}
+.save{font:12px var(--f-mono);color:var(--muted)}
+.sec{display:flex;flex-direction:column;gap:12px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg{width:18px;height:10px;border-radius:3px;border:1.5px solid var(--muted);box-sizing:border-box}
+.lg.l-curso{background:repeating-linear-gradient(135deg,var(--muted) 0 3px,transparent 3px 6px)}
+.lg.l-feito{background:var(--muted)}
+.lg.l-hoje{width:2px;height:14px;border:0;background:var(--today);border-radius:0}
+.hint{font-size:12.5px;color:var(--muted);margin:0}
+/* Gantt */
+.gantt{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.gi{position:relative}
+.g-head,.g-row{display:flex}
+.g-left{position:sticky;left:0;z-index:3;flex:0 0 var(--lw);width:var(--lw);box-sizing:border-box;background:var(--surface);
+  border-right:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:6px 10px;min-width:0}
+.g-head .g-left{font:600 10.5px var(--f-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);border-bottom:1px solid var(--line)}
+.g-scale{position:relative;flex:1 0 auto;height:46px;border-bottom:1px solid var(--line)}
+.m-lbl{position:absolute;top:0;height:100%;box-sizing:border-box;border-left:1px solid var(--line);padding:6px 0 0 7px;
+  font:700 13px var(--f-display);text-transform:uppercase;letter-spacing:.05em}
+.w-lbl{position:absolute;bottom:5px;font:10px var(--f-mono);color:var(--muted);transform:translateX(-50%);font-variant-numeric:tabular-nums}
+.g-body{position:relative}
+.g-overlay{position:absolute;top:0;bottom:0;left:var(--lw);pointer-events:none;z-index:0}
+.wl{position:absolute;top:0;bottom:0;width:1px;background:var(--soft)}
+.ml{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.jan{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,transparent 0 6px,var(--soft) 6px 7px)}
+.today{position:absolute;top:0;bottom:0;width:2px;background:var(--today);z-index:4}
+.today b{position:absolute;top:2px;left:5px;font:600 10px var(--f-mono);color:var(--today);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.g-row{position:relative;z-index:1;border-bottom:1px solid var(--soft);min-height:36px}
+.g-track{position:relative;flex:1 0 auto}
+.g-name{font-size:13px;line-height:1.25;min-width:0;overflow-wrap:anywhere}
+.g-name small{display:block;font:10.5px var(--f-mono);color:var(--muted)}
+.g-phase .g-left,.g-phase{background:color-mix(in srgb,var(--pc) 9%,var(--surface))}
+.g-phase .g-left{font:700 13px var(--f-display);text-transform:uppercase;letter-spacing:.05em}
+.g-span{position:absolute;top:50%;height:4px;margin-top:-2px;background:var(--pc);border-radius:2px}
+.bar{position:absolute;top:50%;height:16px;margin-top:-8px;box-sizing:border-box;border-radius:4px;border:1.5px solid var(--pc);
+  background:color-mix(in srgb,var(--pc) 14%,var(--surface))}
+.b-em-curso{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--pc) 60%,var(--surface)) 0 4px,color-mix(in srgb,var(--pc) 18%,var(--surface)) 4px 8px)}
+.b-feito{background:var(--pc)}
+.bar-d{position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:6px;font:10.5px var(--f-mono);color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ms-band{position:absolute;top:50%;height:16px;margin-top:-8px;border:1.5px dashed var(--ink);border-radius:4px;box-sizing:border-box}
+.ms-band span{position:absolute;left:8px;top:50%;transform:translateY(-50%);font:600 10.5px var(--f-mono);white-space:nowrap}
+.st{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);background:transparent;padding:0;cursor:pointer;position:relative}
+.st-em-curso{border-color:var(--warn);background:linear-gradient(90deg,var(--warn) 50%,transparent 50%)}
+.st-feito{border-color:var(--ok);background:var(--ok)}
+.st-feito::after{content:"";position:absolute;left:5px;top:1.5px;width:4px;height:8px;border:solid var(--surface);border-width:0 2px 2px 0;transform:rotate(45deg)}
+/* Sequence */
+.checks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px}
+.checks li{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;min-width:0}
+.checks li.bad{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 9%,var(--surface))}
+.ck{flex:none;font:700 11px/18px var(--f-mono);width:18px;height:18px;text-align:center;border-radius:50%;color:var(--surface);background:var(--ok)}
+.bad .ck{background:var(--warn)}
+.checks p{margin:0;font-size:13px;min-width:0}
+.checks p small{display:block;color:var(--muted);font:11px var(--f-mono);margin-top:2px}
+/* Plan table */
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:680px}
+th{font:600 10.5px var(--f-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);text-align:left;padding:10px 10px;border-bottom:1px solid var(--line)}
+td{padding:5px 10px;border-bottom:1px solid var(--soft);vertical-align:middle}
+tr.ph-row td{background:color-mix(in srgb,var(--pc) 9%,var(--surface));font:700 13px var(--f-display);text-transform:uppercase;letter-spacing:.05em;padding-block:9px}
+tr.ph-row td i{display:inline-block;width:10px;height:10px;background:var(--pc);border-radius:2px;margin-right:8px}
+.in{width:100%;box-sizing:border-box;border:1px solid transparent;background:transparent;border-radius:4px;padding:6px 8px}
+.in:hover{border-color:var(--line)}
+.in:focus{border-color:var(--p1);background:var(--bg);outline:none}
+input[type=date].in{font:12.5px var(--f-mono);font-variant-numeric:tabular-nums;min-width:132px}
+select.in{min-width:110px;cursor:pointer}
+.days{font:12px var(--f-mono);color:var(--muted);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:6px 10px;cursor:pointer;font-size:12.5px}
+.btn:hover{border-color:var(--muted)}
+.btn.add{color:var(--pc);border-style:dashed;border-color:color-mix(in srgb,var(--pc) 50%,var(--line))}
+.btn.del{color:var(--muted);padding:4px 8px}
+.btn.del.arm{color:var(--surface);background:var(--today);border-color:var(--today)}
+
+/* v2: % feita e datas reais */
+.g-row{min-height:42px}
+.bar{margin-top:-11px}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--pc);border-radius:2px 0 0 2px}
+.b-late{border-color:var(--today)}
+.bar-d b{color:var(--ink);font-weight:600}
+.real{position:absolute;top:50%;margin-top:8px;height:4px;background:var(--ink);border-radius:2px}
+.real.open{background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 9px)}
+.late-t{color:var(--today);font-weight:600}
+.ph-pct{margin-left:auto;font:600 14px var(--f-mono);color:var(--pc);letter-spacing:0}
+.lg.l-plan{border-color:var(--muted);background:linear-gradient(90deg,var(--muted) 55%,transparent 55%)}
+.lg.l-real{height:4px;border:0;background:var(--ink);border-radius:2px}
+table{min-width:1000px}
+th.c-name{width:32%}
+th.grp{text-align:center;border-bottom:1px solid var(--line);padding-bottom:6px}
+tr.sub th{padding-top:6px}
+.real-c{background:color-mix(in srgb,var(--ink) 3%,var(--surface))}
+.in.is-late{color:var(--today);font-weight:600}
+.pct{display:grid;grid-template-columns:68px auto;align-items:center;gap:3px 4px;min-width:96px}
+.pct input.in{font:12.5px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.pct span{font:12px var(--f-mono);color:var(--muted)}
+.pct i{grid-column:1/-1;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--pc) var(--w),var(--soft) var(--w))}
+/* v3: colunas de início e fim no Gantt */
+:root{--lw:420px}
+@media (max-width:640px){:root{--lw:150px}}
+.g-left .g-name{flex:1 1 auto}
+.g-dt{flex:0 0 64px;text-align:right;font:11.5px/1.25 var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.g-dt small{display:block;font-size:10px;color:var(--muted)}
+.g-dt small.lt{color:var(--today);font-weight:600}
+.g-head .g-dt{font:600 10.5px var(--f-mono);color:var(--muted);letter-spacing:.09em}
+.g-phase .g-dt{font-weight:600;text-transform:none;letter-spacing:0}
+@media (max-width:640px){.g-dt{display:none}}
+/* v4: datas editáveis no Gantt */
+:root{--lw:520px}
+@media (max-width:640px){:root{--lw:150px}}
+.g-dt{flex-basis:118px}
+.gd{width:100%;box-sizing:border-box;font:11.5px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:4px;padding:3px 4px;cursor:pointer}
+.gd:hover{border-color:var(--line)}
+.gd:focus{border-color:var(--p1);background:var(--bg);outline:none}
+.g-ed small{padding-right:5px}
+/* v5: % editável no Gantt */
+:root{--lw:590px}
+@media (max-width:640px){:root{--lw:150px}}
+.g-dt.g-pc{flex-basis:62px}
+.gp{text-align:right;cursor:text}
+/* v6: responsável, nome editável, adicionar tarefas no Gantt */
+:root{--lw:720px}
+@media (max-width:640px){:root{--lw:170px}}
+.g-dt.g-ow{flex-basis:130px;text-align:left}
+.go,.gn{cursor:text}
+.gn{font:13px/1.25 var(--f-body);padding:3px 5px;margin-left:-5px;width:calc(100% + 5px)}
+.g-name small{padding-left:1px}
+.g-add{min-height:38px}
+.g-add .g-left{background:var(--surface)}
+.g-add .btn{padding:4px 10px;font-size:12px}
+@media (max-width:640px){.g-add .btn{white-space:nowrap}}
+table{min-width:1140px}
+
+/* Versão pública só de leitura */
+.btn.add,.btn.del,.g-add,.hint{display:none!important}
+.st{pointer-events:none}
+.in:disabled,.gd:disabled{opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink);cursor:default;border-color:transparent}
+.gd::-webkit-calendar-picker-indicator,.in::-webkit-calendar-picker-indicator{display:none}
+.ro{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-top:14px;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;color:var(--muted)}
+.ro b{color:var(--ink)}
+</style>
+</head><body><div id="app"></div>
+<script type="application/json" id="state">{"phases":[{"id":"f1","name":"Fase 1 · Outubro","color":"--p1","start":"2026-10-01"},{"id":"f2","name":"Fase 2 · Novembro","color":"--p2","start":"2026-11-02"},{"id":"f3","name":"Fase 3 · Até 20 dez","color":"--p3","start":"2026-12-01"}],"tasks":[{"id":"f1-salas","phase":"f1","name":"Salas de cima operacionais","start":"2026-10-01","end":"2026-10-24","pct":0,"realStart":"","realEnd":""},{"id":"f1-pladur","phase":"f1","name":"Estruturas de pladur montadas","start":"2026-10-01","end":"2026-10-20","pct":100,"realStart":"","realEnd":""},{"id":"f1-wc","phase":"f1","name":"WC operacionais (fase inicial)","start":"2026-10-05","end":"2026-10-24","pct":0,"realStart":"","realEnd":""},{"id":"f1-quadros","phase":"f1","name":"Quadro geral elétrico e quadro da régie","start":"2026-10-12","end":"2026-10-28","pct":0,"realStart":"","realEnd":""},{"id":"f1-teto-teste","phase":"f1","name":"Testar fixação do teto","note":"feito em avanço","start":"2026-10-14","end":"2026-10-16","pct":100,"realStart":"","realEnd":""},{"id":"f1-barras","phase":"f1","name":"Instalação das barras de luz","note":"feito em avanço","start":"2026-10-16","end":"2026-10-21","pct":100,"realStart":"","realEnd":""},{"id":"f1-piso","phase":"f1","name":"Normalizar piso da sala da ED (em baixo)","start":"2026-10-20","end":"2026-10-30","pct":0,"realStart":"","realEnd":""},{"id":"f1-luz","phase":"f1","name":"Luz do salão","start":"2026-10-20","end":"2026-10-30","pct":0,"realStart":"","realEnd":""},{"id":"f1-bar","phase":"f1","name":"Bar (temporário)","start":"2026-10-26","end":"2026-10-31","pct":0,"realStart":"","realEnd":""},{"id":"f1-limpeza","phase":"f1","name":"Limpeza de fim de fase","start":"2026-10-30","end":"2026-10-31","pct":0,"realStart":"","realEnd":""},{"id":"f2-cabos","phase":"f2","name":"Passar cabos para o suporte do teto","start":"2026-11-02","end":"2026-11-11","pct":0,"realStart":"","realEnd":""},{"id":"f2-regie","phase":"f2","name":"Régie","start":"2026-11-02","end":"2026-11-13","pct":0,"realStart":"","realEnd":""},{"id":"f2-palco","phase":"f2","name":"Palco","start":"2026-11-02","end":"2026-11-20","pct":0,"realStart":"","realEnd":""},{"id":"f2-ponto-luz","phase":"f2","name":"Ponto de luz para decoração e TVs de parede","start":"2026-11-09","end":"2026-11-13","pct":0,"realStart":"","realEnd":""},{"id":"f2-pint-baixo","phase":"f2","name":"Lixar e pintar as salas de baixo","start":"2026-11-09","end":"2026-11-20","pct":0,"realStart":"","realEnd":""},{"id":"f2-pint-salao","phase":"f2","name":"Pinturas (salão e entrada)","start":"2026-11-16","end":"2026-11-27","pct":0,"realStart":"","realEnd":""},{"id":"f2-tela","phase":"f2","name":"Tela principal","start":"2026-11-23","end":"2026-11-26","pct":0,"realStart":"","realEnd":""},{"id":"f2-projetor","phase":"f2","name":"Projetor principal","start":"2026-11-23","end":"2026-11-27","pct":0,"realStart":"","realEnd":""},{"id":"f2-limpeza","phase":"f2","name":"Limpeza de fim de fase","start":"2026-11-28","end":"2026-11-30","pct":0,"realStart":"","realEnd":""},{"id":"f3-teto","phase":"f3","name":"Montar o teto","start":"2026-12-01","end":"2026-12-07","pct":0,"realStart":"","realEnd":""},{"id":"f3-portao","phase":"f3","name":"Pintar o portão da rua","start":"2026-12-01","end":"2026-12-04","pct":0,"realStart":"","realEnd":""},{"id":"f3-fachada","phase":"f3","name":"Pintar a fachada","start":"2026-12-01","end":"2026-12-09","pct":0,"realStart":"","realEnd":""},{"id":"f3-alcatifa","phase":"f3","name":"Montar a alcatifa","start":"2026-12-08","end":"2026-12-11","pct":0,"realStart":"","realEnd":""},{"id":"f3-limpeza","phase":"f3","name":"Limpeza geral","start":"2026-12-12","end":"2026-12-14","pct":0,"realStart":"","realEnd":""},{"id":"f3-decoracao","phase":"f3","name":"Decoração geral","start":"2026-12-15","end":"2026-12-18","pct":0,"realStart":"","realEnd":""},{"id":"f3-salas-ed","phase":"f3","name":"Preparar salas da ED em baixo (decoração e montagem)","start":"2026-12-15","end":"2026-12-18","pct":0,"realStart":"","realEnd":""},{"id":"f3-som","phase":"f3","name":"Afinar o som","start":"2026-12-15","end":"2026-12-17","pct":0,"realStart":"","realEnd":""},{"id":"f3-testes","phase":"f3","name":"Testes finais","start":"2026-12-18","end":"2026-12-20","pct":0,"realStart":"","realEnd":""}],"milestone":{"name":"Inauguração","start":"2027-01-04","end":"2027-01-29","note":"janeiro, data a decidir"},"deps":[{"before":"f2-cabos","after":"f3-teto","why":"Os cabos ficam no suporte antes de fechar o teto."},{"before":"f2-ponto-luz","after":"f3-teto","why":"Pontos de luz e cabos das TVs antes do teto."},{"before":"f2-pint-salao","after":"f3-alcatifa","why":"Pinturas interiores antes da alcatifa, para não a sujar."},{"before":"f2-pint-baixo","after":"f3-alcatifa","why":"Salas de baixo pintadas antes da alcatifa."},{"before":"f3-alcatifa","after":"f3-limpeza","why":"Limpeza geral depois de terminadas as obras."},{"before":"f3-limpeza","after":"f3-decoracao","why":"Decoração só com a sala limpa."},{"before":"f3-teto","after":"f3-som","why":"O teto altera a acústica: afinar o som depois."},{"before":"f3-alcatifa","after":"f3-som","why":"A alcatifa altera a acústica: afinar o som depois."},{"before":"f3-som","after":"f3-testes","why":"Testes finais com o som já afinado."}]}</script>
+<script id="appjs">
+(function(){
+var FONT='<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">';
+var SKEL='<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>';
+var S=JSON.parse(document.getElementById('state').textContent);
+var CSS=document.getElementById('css').textContent;
+var APPJS=document.getElementById('appjs').textContent;
+var DAY=864e5,PX=7;
+var START=Date.UTC(2026,9,1),END=Date.UTC(2027,1,1);
+var MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+var MESL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+var art=null,timer=null,armed=null,saveMsg='Só leitura',focusAfter=null;
+var now=new Date(),TODAY=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
+S.tasks.forEach(function(k){
+  if(k.pct==null){k.pct=k.status==='feito'?100:k.status==='em curso'?50:0}
+  delete k.status;if(k.realStart==null)k.realStart='';if(k.owner==null)k.owner='';if(k.realEnd==null)k.realEnd='';
+});
+function d(s){var p=s.split('-');return Date.UTC(+p[0],p[1]-1,+p[2])}
+function off(s){return (d(s)-START)/DAY}
+function offT(t){return (t-START)/DAY}
+function iso(t){return new Date(t).toISOString().slice(0,10)}
+function fmt(s){var x=new Date(d(s));return x.getUTCDate()+' '+MES[x.getUTCMonth()]}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function status(k){return k.pct>=100?'feito':k.pct>0?'em curso':'por fazer'}
+function slug(s){return s.replace(/\s+/g,'-')}
+function byId(id){for(var i=0;i<S.tasks.length;i++)if(S.tasks[i].id===id)return S.tasks[i];return null}
+function tasksOf(p){return S.tasks.filter(function(t){return t.phase===p}).sort(function(a,b){return a.start<b.start?-1:a.start>b.start?1:(a.end<b.end?-1:1)})}
+function range(ts){if(!ts.length)return 'sem tarefas';var sp=span(ts);return fmt(sp[0])+' – '+fmt(sp[1])}
+function span(ts){var a=ts[0].start,b=ts[0].end;ts.forEach(function(t){if(t.start<a)a=t.start;if(t.end>b)b=t.end});return [a,b]}
+function ndays(t){return Math.round((d(t.end)-d(t.start))/DAY)+1}
+function phase(id){for(var i=0;i<S.phases.length;i++)if(S.phases[i].id===id)return S.phases[i]}
+function late(k){if(k.realEnd)return d(k.realEnd)>d(k.end);return k.pct<100&&TODAY>d(k.end)}
+function dcell(k,f,r,lt){return '<span class="g-dt g-ed"><input class="gd" type="date" id="g'+f+'-'+k.id+'" data-id="'+k.id+'" data-f="'+f+'" value="'+k[f]+'" aria-label="'+(f==='start'?'Início':'Fim')+' planeado de '+esc(k.name)+'">'+(r?'<small'+(lt?' class="lt"':'')+'>real '+fmt(r)+'</small>':'')+'</span>'}
+function phasePct(ts){if(!ts.length)return 0;var w=0,s=0;ts.forEach(function(k){var n=ndays(k);w+=n;s+=n*k.pct});return Math.round(s/w)}
+
+function render(){
+  var app=document.getElementById('app');
+  var days=Math.round((END-START)/DAY),tw=days*PX,h='';
+  var allPct=phasePct(S.tasks);
+  h+='<header><div class="eyebrow">Obra · outubro 2026 a janeiro 2027</div><h1>Plano da Obra</h1>'+
+     '<p class="lede">Três fases até 20 de dezembro, '+allPct+'% feito no total. '+esc(S.milestone.name)+': '+esc(S.milestone.note)+'.</p><div class="phases">';
+  S.phases.forEach(function(p){var ts=tasksOf(p.id),dn=ts.filter(function(t){return t.pct>=100}).length,pct=phasePct(ts),lt=ts.filter(late).length;
+    h+='<div class="ph" style="--pc:var('+p.color+')"><div class="ph-name"><i></i>'+esc(p.name)+'<b class="ph-pct">'+pct+'%</b></div><div class="ph-dates">'+range(ts)+'</div><div class="ph-bar"><span style="width:'+pct+'%"></span></div><div class="ph-count">'+dn+' de '+ts.length+' concluídas'+(lt?' · <span class="late-t">'+lt+' atrasada'+(lt>1?'s':'')+'</span>':'')+'</div></div>'});
+  h+='</div></header>';
+  // Gantt
+  h+='<section class="sec"><div class="sec-head"><h2>Gantt</h2><div class="legend"><span><i class="lg l-plan"></i>Planeado, preenchido até à % feita</span><span><i class="lg l-real"></i>Real (início a conclusão)</span><span><i class="lg l-hoje"></i>Hoje</span></div></div>';
+  h+='<p class="hint">O círculo de cada tarefa avança 0% → 50% → 100%. Nome, responsável, % feita e datas editam-se diretamente aqui ou no planeamento, mais abaixo.</p>';
+  h+='<div class="gantt"><div class="gi" style="width:calc(var(--lw) + '+tw+'px)"><div class="g-head"><div class="g-left"><span class="g-name">Tarefa</span><span class="g-dt g-ow">Responsável</span><span class="g-dt g-pc">%</span><span class="g-dt">Início</span><span class="g-dt">Fim</span></div><div class="g-scale" style="width:'+tw+'px">';
+  var t,mo=[];
+  for(t=START;t<END;){var x=new Date(t),nx=Date.UTC(x.getUTCFullYear(),x.getUTCMonth()+1,1);mo.push([t,nx]);t=nx}
+  mo.forEach(function(m){var x=new Date(m[0]);h+='<div class="m-lbl" style="left:'+(offT(m[0])*PX)+'px;width:'+((m[1]-m[0])/DAY*PX)+'px">'+MESL[x.getUTCMonth()]+'</div>'});
+  var mondays=[];for(t=START;t<END;t+=DAY){if(new Date(t).getUTCDay()===1)mondays.push(t)}
+  mondays.forEach(function(m){h+='<div class="w-lbl" style="left:'+(offT(m)*PX)+'px">'+new Date(m).getUTCDate()+'</div>'});
+  h+='</div></div><div class="g-body"><div class="g-overlay" style="width:'+tw+'px">';
+  mondays.forEach(function(m){h+='<div class="wl" style="left:'+(offT(m)*PX)+'px"></div>'});
+  mo.forEach(function(m){h+='<div class="ml" style="left:'+(offT(m[0])*PX)+'px"></div>'});
+  if(TODAY>=START&&TODAY<END)h+='<div class="today" style="left:'+(offT(TODAY)*PX+PX/2)+'px"><b>Hoje</b></div>';
+  h+='</div>';
+  S.phases.forEach(function(p){var ts=tasksOf(p.id);var pc='style="--pc:var('+p.color+')"';
+    var ps=ts.length?span(ts):null;h+='<div class="g-row g-phase" '+pc+'><div class="g-left"><span class="g-name">'+esc(p.name)+'</span><span class="g-dt g-ow"></span><span class="g-dt g-pc">'+phasePct(ts)+'%</span><span class="g-dt">'+(ps?fmt(ps[0]):'')+'</span><span class="g-dt">'+(ps?fmt(ps[1]):'')+'</span></div><div class="g-track" style="width:'+tw+'px">';
+    if(ts.length){var sp=span(ts);h+='<div class="g-span" style="left:'+(off(sp[0])*PX)+'px;width:'+((off(sp[1])-off(sp[0])+1)*PX)+'px"></div>'}
+    h+='</div></div>';
+    ts.forEach(function(k){var st=slug(status(k)),lt=late(k);
+      var sub=[];if(k.note)sub.push(esc(k.note));if(lt)sub.push('<span class="late-t">atrasada</span>');
+      h+='<div class="g-row" '+pc+'><div class="g-left"><button class="st st-'+st+'" data-cycle="'+k.id+'" aria-label="'+esc(k.name)+': '+k.pct+'% feito" title="'+k.pct+'% feito"></button><span class="g-name"><input class="gd gn" id="gn-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa">'+(sub.length?'<small>'+sub.join(' · ')+'</small>':'')+'</span><span class="g-dt g-ow g-ed"><input class="gd go" id="go-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="—" aria-label="Responsável por '+esc(k.name)+'"></span><span class="g-dt g-pc g-ed"><input class="gd gp" type="number" min="0" max="100" step="5" id="gp-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="% feita de '+esc(k.name)+'"></span>'+dcell(k,'start',k.realStart,false)+dcell(k,'end',k.realEnd,k.realEnd&&d(k.realEnd)>d(k.end))+'</div>'+
+         '<div class="g-track" style="width:'+tw+'px"><div class="bar'+(lt?' b-late':'')+'" style="left:'+(off(k.start)*PX)+'px;width:'+(ndays(k)*PX)+'px" title="'+esc(k.name)+' · planeado '+fmt(k.start)+' – '+fmt(k.end)+'"><i class="fill" style="width:'+k.pct+'%"></i><span class="bar-d"><b>'+k.pct+'%</b> '+fmt(k.start)+(k.start!==k.end?' – '+fmt(k.end):'')+'</span></div>';
+      if(k.realStart){var rs=d(k.realStart),re=k.realEnd?d(k.realEnd):Math.max(TODAY,rs);if(re<rs)re=rs;
+        h+='<div class="real'+(k.realEnd?'':' open')+'" style="left:'+(offT(rs)*PX)+'px;width:'+(((re-rs)/DAY+1)*PX)+'px" title="Real: '+fmt(k.realStart)+' – '+(k.realEnd?fmt(k.realEnd):'em curso')+'"></div>'}
+      h+='</div></div>'});
+    h+='<div class="g-row g-add" '+pc+'><div class="g-left"><button class="btn add" data-add="'+p.id+'" data-where="g">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></div><div class="g-track" style="width:'+tw+'px"></div></div>';
+  });
+  var M=S.milestone;
+  h+='<div class="g-row"><div class="g-left"><span class="g-name"><b>'+esc(M.name)+'</b><small>'+esc(M.note)+'</small></span><span class="g-dt g-ow"></span><span class="g-dt g-pc"></span><span class="g-dt">jan</span><span class="g-dt"><small>a decidir</small></span></div><div class="g-track" style="width:'+tw+'px"><div class="ms-band" style="left:'+(off(M.start)*PX)+'px;width:'+((off(M.end)-off(M.start)+1)*PX)+'px"><span>'+esc(M.name)+' · a decidir</span></div></div></div>';
+  h+='</div></div></div></section>';
+  // Sequence
+  var bad=0,items='';
+  S.deps.forEach(function(dp){var a=byId(dp.before),b=byId(dp.after);if(!a||!b)return;var ok=d(b.start)>d(a.end);if(!ok)bad++;
+    items+='<li class="'+(ok?'':'bad')+'"><span class="ck">'+(ok?'✓':'!')+'</span><p>'+esc(a.name)+' → '+esc(b.name)+'<small>'+esc(dp.why)+(ok?'':' Datas sobrepostas: '+fmt(a.end)+' / '+fmt(b.start)+'.')+'</small></p></li>'});
+  h+='<section class="sec"><div class="sec-head"><h2>Sequência</h2><span class="save">'+(bad?bad+' ponto'+(bad>1?'s':'')+' a rever':'Tudo pela ordem certa')+'</span></div><ul class="checks">'+items+'</ul></section>';
+  // Planning
+  h+='<section class="sec"><div class="sec-head"><h2>Planeamento</h2><span class="save" id="save">'+esc(saveMsg)+'</span></div>';
+  h+='<p class="hint">As datas planeadas são uma estimativa. Ao passar de 0% é preenchido o início real com a data de hoje, e ao chegar a 100% a conclusão real; pode corrigir as duas.</p>';
+  h+='<div class="plan"><table><thead><tr><th class="c-name">Tarefa</th><th>Responsável</th><th colspan="2" class="grp">Planeado</th><th colspan="2" class="grp">Real</th><th>% feita</th><th></th></tr>'+
+     '<tr class="sub"><th></th><th></th><th>Início</th><th>Fim</th><th>Início</th><th>Conclusão</th><th></th><th></th></tr></thead><tbody>';
+  S.phases.forEach(function(p){var pc='style="--pc:var('+p.color+')"';
+    h+='<tr class="ph-row" '+pc+'><td colspan="8"><i></i>'+esc(p.name)+'</td></tr>';
+    tasksOf(p.id).forEach(function(k){var lt=k.realEnd&&d(k.realEnd)>d(k.end);
+      h+='<tr '+pc+'><td><input class="in" id="n-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa"></td>'+
+        '<td><input class="in" id="o-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="Nome" aria-label="Responsável"></td>'+
+        '<td><input class="in" type="date" id="s-'+k.id+'" data-id="'+k.id+'" data-f="start" value="'+k.start+'" aria-label="Início planeado"></td>'+
+        '<td><input class="in" type="date" id="e-'+k.id+'" data-id="'+k.id+'" data-f="end" value="'+k.end+'" aria-label="Fim planeado"></td>'+
+        '<td class="real-c"><input class="in" type="date" id="rs-'+k.id+'" data-id="'+k.id+'" data-f="realStart" value="'+k.realStart+'" aria-label="Início real"></td>'+
+        '<td class="real-c"><input class="in'+(lt?' is-late':'')+'" type="date" id="re-'+k.id+'" data-id="'+k.id+'" data-f="realEnd" value="'+k.realEnd+'" aria-label="Conclusão real"></td>'+
+        '<td><div class="pct"><input class="in" type="number" min="0" max="100" step="5" id="p-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="Percentagem feita"><span>%</span><i style="--w:'+k.pct+'%"></i></div></td>'+
+        '<td><button class="btn del'+(armed===k.id?' arm':'')+'" data-del="'+k.id+'">'+(armed===k.id?'Apagar?':'×')+'</button></td></tr>'});
+    h+='<tr '+pc+'><td colspan="8"><button class="btn add" data-add="'+p.id+'" data-where="t">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></td></tr>';
+  });
+  h+='</tbody></table></div></section>';
+  app.innerHTML=h;
+  if(focusAfter){var fe=document.getElementById(focusAfter);focusAfter=null;if(fe){fe.focus();try{fe.select()}catch(_){};fe.scrollIntoView({block:'center'})}}
+}
+function setSave(m){saveMsg=m;var el=document.getElementById('save');if(el)el.textContent=m}
+function changed(){render();if(!art){setSave('Nesta vista as alterações não ficam guardadas.');return}setSave('Alterações por guardar…');clearTimeout(timer);timer=setTimeout(save,1200)}
+function buildDoc(){
+  var json=JSON.stringify(S).replace(/</g,'\\u003c');
+  return SKEL+'<title>Plano da Obra</title><meta name="claude:viewport-fit-sides" content="cover">'+FONT+'<style id="css">'+CSS+'</style><div id="app"></div><script type="application/json" id="state">'+json+'<\/script><script id="appjs">'+APPJS+'<\/script></body></html>';
+}
+function save(){setSave('A guardar…');art.publish(buildDoc()).then(function(){setSave('Guardado')},function(err){var c=err&&err.code;
+  if(c==='conflict')setSave('Outra pessoa guardou ao mesmo tempo. A página vai recarregar.');
+  else if(c==='not_granted'||c==='not_writer')setSave('Só tem acesso de leitura: as alterações não ficam guardadas.');
+  else setSave('Não foi possível guardar. Faça outra alteração para tentar de novo.')})}
+function setPct(k,v){var was=k.pct;k.pct=v;
+  if(v>0&&was===0&&!k.realStart)k.realStart=iso(TODAY);
+  if(v>=100&&!k.realEnd)k.realEnd=iso(Math.max(TODAY,k.realStart?d(k.realStart):TODAY));
+  if(v<100&&was>=100)k.realEnd='';}
+var app=document.getElementById('app');
+app.addEventListener('click',function(e){
+  var c=e.target.closest('[data-cycle]');
+  if(c){var k=byId(c.dataset.cycle);setPct(k,k.pct>=100?0:k.pct>=50?100:50);if(k.pct===0){k.realStart='';k.realEnd=''}changed();return}
+  var a=e.target.closest('[data-add]');
+  if(a){var p=phase(a.dataset.add),st=p.start;var nid='t'+Date.now().toString(36);S.tasks.push({id:nid,phase:p.id,name:'Nova tarefa',owner:'',start:st,end:iso(d(st)+2*DAY),pct:0,realStart:'',realEnd:''});armed=null;focusAfter=(a.dataset.where==='g'?'gn-':'n-')+nid;changed();return}
+  var x=e.target.closest('[data-del]');
+  if(x){var id=x.dataset.del;if(armed===id){S.tasks=S.tasks.filter(function(t){return t.id!==id});S.deps=S.deps.filter(function(dp){return dp.before!==id&&dp.after!==id});armed=null;changed()}else{armed=id;render()}return}
+  if(armed){armed=null;render()}
+});
+app.addEventListener('change',function(e){var el=e.target,id=el.dataset.id,f=el.dataset.f;if(!id||!f)return;var k=byId(id);if(!k)return;
+  var v=el.value.trim();
+  if(f==='owner'){k.owner=v;changed();return}
+  if(f==='pct'){var n=Math.round(+v);if(v===''||isNaN(n)){render();return}setPct(k,Math.max(0,Math.min(100,n)));changed();return}
+  if(f==='realStart'||f==='realEnd'){k[f]=v;if(k.realStart&&k.realEnd&&k.realEnd<k.realStart){if(f==='realStart')k.realEnd=v;else k.realStart=v}
+    if(f==='realEnd'&&v&&k.pct<100)k.pct=100;changed();return}
+  if(!v){render();return}
+  k[f]=v;if(f==='start'&&k.end<k.start)k.end=k.start;if(f==='end'&&k.end<k.start)k.start=k.end;changed()});
+render();
+})();
+</script>
+<script>
+(function(){
+  function lock(){document.querySelectorAll('#app input,#app select,#app button').forEach(function(e){e.disabled=true;e.tabIndex=-1});
+    var h=document.querySelector('#app header .lede');
+    if(h&&!document.querySelector('.ro')){var d=document.createElement('div');d.className='ro';
+      d.innerHTML='<b>Versão só de leitura</b><span>Atualizada automaticamente de hora a hora. Última alteração: 27/10/2026 às 12:57.</span>';h.after(d)}}
+  lock();new MutationObserver(lock).observe(document.getElementById('app'),{childList:true});
+})();
+</script>
+</body></html>
