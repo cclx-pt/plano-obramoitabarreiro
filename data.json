@@ -391,6 +391,18 @@
    "pct": 0,
    "realStart": "",
    "realEnd": ""
+  },
+  {
+   "id": "tmvr8amny",
+   "phase": "f1",
+   "name": "Nova tarefa",
+   "owner": "",
+   "notes": "",
+   "start": "2026-10-01",
+   "end": "2026-10-03",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": ""
   }
  ],
  "milestone": {
@@ -446,5 +458,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T21:49:37Z"
+ "updatedAt": "2026-10-27T21:59:43Z"
 }
