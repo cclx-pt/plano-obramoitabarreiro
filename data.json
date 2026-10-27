@@ -361,7 +361,7 @@
    "phase": "f1",
    "name": "Pintura do Salão",
    "owner": "Anderson",
-   "start": "2026-10-29",
+   "start": "2026-10-28",
    "end": "2026-10-30",
    "pct": 0,
    "realStart": "",
@@ -446,5 +446,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T21:44:29Z"
+ "updatedAt": "2026-10-27T21:49:37Z"
 }
