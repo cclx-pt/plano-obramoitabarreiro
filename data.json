@@ -40,7 +40,7 @@
    "pct": 100,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "Diego"
   },
   {
    "id": "f1-wc",
@@ -384,5 +384,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:19:10Z"
+ "updatedAt": "2026-10-27T13:19:13Z"
 }
