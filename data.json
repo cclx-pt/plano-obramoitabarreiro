@@ -371,7 +371,7 @@
   {
    "id": "tmvqqhhty",
    "phase": "f1",
-   "name": "Instalação do Quadro da Regie",
+   "name": "Instalação do quadro da Regie",
    "owner": "Alexandro",
    "start": "2026-10-26",
    "end": "2026-10-26",
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T22:20:42Z"
+ "updatedAt": "2026-10-27T22:21:32Z"
 }
