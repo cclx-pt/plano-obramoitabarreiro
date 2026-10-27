@@ -104,7 +104,7 @@
    "phase": "f1",
    "name": "Luz do salão",
    "start": "2026-10-20",
-   "end": "2026-10-30",
+   "end": "2026-10-31",
    "pct": 0,
    "realStart": "",
    "realEnd": "",
@@ -384,5 +384,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:18:37Z"
+ "updatedAt": "2026-10-27T13:18:43Z"
 }
