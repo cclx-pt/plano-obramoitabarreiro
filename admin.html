@@ -66,8 +66,9 @@
   function drawBar(){
     var t=getTok();
     bar.innerHTML='<div class="adminbar"><b>Modo admin</b><span>As alterações são gravadas no GitHub e aparecem na página pública cerca de 1 minuto depois.</span><span class="sp"></span>'+
-      '<a href="./" target="_blank" rel="noopener">Ver página pública</a><button class="btn" id="logout">Sair (token …'+esc(t.slice(-4))+')</button></div>';
+      '<button class="btn" id="sync">Sincronizar agora</button><span id="syncmsg" class="save"></span><a href="./" target="_blank" rel="noopener">Ver página pública</a><button class="btn" id="logout">Sair (token …'+esc(t.slice(-4))+')</button></div>';
     document.getElementById('logout').onclick=function(){setTok('');location.reload()};
+    document.getElementById('sync').onclick=syncNow;
   }
   function fetchData(){
     return gh('GET').then(function(r){if(!r.ok)throw {setup:why(r)};return r.json()})
@@ -86,6 +87,20 @@
     queue=job.catch(function(){});
     return job;
   }
+  // Grava já o que estiver pendente e recarrega a versão mais recente do GitHub.
+  function syncNow(){
+    var b=document.getElementById('sync'),m=document.getElementById('syncmsg');
+    if(!window.PLANO||!window.PLANO.flush)return;
+    b.disabled=true;m.textContent='A sincronizar…';
+    window.PLANO.flush()
+      .then(function(){return queue})
+      .then(fetchData)
+      .then(function(d){window.PLANO.rerender(d);window.PLANO.status('Sincronizado com o GitHub');
+        m.textContent='Sincronizado às '+new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'})})
+      .catch(function(e){m.textContent=e&&e.message?e.message:(e&&e.setup?e.setup:'Não foi possível sincronizar. Tente outra vez.')})
+      .then(function(){b.disabled=false});
+  }
+  window.addEventListener('beforeunload',function(e){if(window.PLANO&&window.PLANO.pending&&window.PLANO.pending()){e.preventDefault();e.returnValue=''}});
   function load(){
     if(!getTok()){setup();return}
     app.innerHTML='<p class="msg">A carregar do GitHub…</p>';

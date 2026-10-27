@@ -15,6 +15,7 @@
 .gd::-webkit-calendar-picker-indicator,.in::-webkit-calendar-picker-indicator{display:none}
 .ro{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-top:14px;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;color:var(--muted)}
 .ro b{color:var(--ink)}
+.ro .rf{margin-left:auto;padding:4px 10px;font-size:12px}
 .msg{max-width:1320px;margin:40px auto;color:var(--muted)}
 </style>
 </head>
@@ -25,12 +26,15 @@
   var app=document.getElementById('app');
   function when(iso){try{return new Date(iso).toLocaleString('pt-PT',{timeZone:'Europe/Lisbon',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
   function lock(){
-    app.querySelectorAll('input,select,button').forEach(function(e){e.disabled=true;e.tabIndex=-1});
+    app.querySelectorAll('input,select,button:not(.rf)').forEach(function(e){e.disabled=true;e.tabIndex=-1});
     var lede=app.querySelector('header .lede');
     if(lede&&!app.querySelector('.ro')){var d=document.createElement('div');d.className='ro';
       var u=window.PLANO.data.updatedAt;
-      d.innerHTML='<b>Versão só de leitura</b><span>'+(u?'Última alteração: '+when(u)+'.':'')+'</span>';lede.after(d)}
+      d.innerHTML='<b>Versão só de leitura</b><span>'+(u?'Última alteração: '+when(u)+'.':'')+'</span><button class="btn rf" type="button">Atualizar</button>';lede.after(d);
+      d.querySelector('.rf').onclick=refresh}
   }
+  function refresh(){var b=app.querySelector('.rf');if(b)b.textContent='A atualizar…';
+    direct().catch(pages).then(function(d){window.PLANO.data=d;window.PLANO.rerender(d)},function(){if(b)b.textContent='Tente outra vez'})}
   window.PLANO={readOnly:true,message:'Só leitura'};
   // Lê os dados diretamente do repositório (atualizado no momento em que o admin grava).
   // Se falhar (ex.: limite de pedidos do GitHub), usa a cópia publicada pelo GitHub Pages.

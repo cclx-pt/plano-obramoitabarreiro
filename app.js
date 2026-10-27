@@ -95,7 +95,11 @@ function render(){
   if(focusAfter){var fe=document.getElementById(focusAfter);focusAfter=null;if(fe){fe.focus();try{fe.select()}catch(_){};fe.scrollIntoView({block:'center'})}}
 }
 function setSave(m){saveMsg=m;var el=document.getElementById('save');if(el)el.textContent=m}
-function changed(){render();if(RO)return;setSave('Alterações por guardar…');clearTimeout(timer);timer=setTimeout(function(){setSave('A guardar…');window.PLANO.save(S).then(setSave,function(e){setSave(e.message)})},1500)}
+function doSave(){timer=null;setSave('A guardar…');return window.PLANO.save(S).then(setSave,function(e){setSave(e.message);throw e})}
+function changed(){render();if(RO)return;setSave('Alterações por guardar…');clearTimeout(timer);timer=setTimeout(function(){doSave().catch(function(){})},1500)}
+window.PLANO.pending=function(){return !!timer};
+window.PLANO.flush=function(){if(!timer)return Promise.resolve();clearTimeout(timer);return doSave()};
+window.PLANO.status=setSave;
 window.PLANO.rerender=function(n){S=n;render()};
 function setPct(k,v){var was=k.pct;k.pct=v;
   if(v>0&&was===0&&!k.realStart)k.realStart=iso(TODAY);
