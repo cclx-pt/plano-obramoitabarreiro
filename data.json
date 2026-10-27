@@ -29,7 +29,8 @@
    "pct": 90,
    "realStart": "2026-10-27",
    "realEnd": "",
-   "owner": "Isac"
+   "owner": "Isac",
+   "notes": ""
   },
   {
    "id": "f1-pladur",
@@ -40,7 +41,8 @@
    "pct": 100,
    "realStart": "",
    "realEnd": "",
-   "owner": "Diego"
+   "owner": "Diego",
+   "notes": ""
   },
   {
    "id": "f1-wc",
@@ -51,7 +53,8 @@
    "pct": 20,
    "realStart": "2026-10-27",
    "realEnd": "",
-   "owner": "Rui/Marta"
+   "owner": "Rui/Marta",
+   "notes": ""
   },
   {
    "id": "f1-quadros",
@@ -62,31 +65,32 @@
    "pct": 100,
    "realStart": "2026-10-23",
    "realEnd": "2026-10-23",
-   "owner": "Diego"
+   "owner": "Diego",
+   "notes": ""
   },
   {
    "id": "f1-teto-teste",
    "phase": "f1",
    "name": "Testar fixação do teto",
-   "note": "feito em avanço",
    "start": "2026-10-14",
    "end": "2026-10-16",
    "pct": 100,
    "realStart": "",
    "realEnd": "",
-   "owner": "Ruben"
+   "owner": "Ruben",
+   "notes": "feito em avanço"
   },
   {
    "id": "f1-barras",
    "phase": "f1",
    "name": "Instalação das barras de luz",
-   "note": "feito em avanço",
    "start": "2026-10-16",
    "end": "2026-10-21",
    "pct": 100,
    "realStart": "",
    "realEnd": "",
-   "owner": "Pedro Jeremias"
+   "owner": "Pedro Jeremias",
+   "notes": "feito em avanço"
   },
   {
    "id": "f1-piso",
@@ -97,7 +101,8 @@
    "pct": 60,
    "realStart": "2026-10-27",
    "realEnd": "",
-   "owner": "Anderson"
+   "owner": "Anderson",
+   "notes": ""
   },
   {
    "id": "f1-luz",
@@ -108,7 +113,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": "Alexandro"
+   "owner": "Alexandro",
+   "notes": ""
   },
   {
    "id": "f1-bar",
@@ -119,7 +125,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": "Marta"
+   "owner": "Marta",
+   "notes": ""
   },
   {
    "id": "f1-limpeza",
@@ -130,7 +137,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": "Joka"
+   "owner": "Joka",
+   "notes": ""
   },
   {
    "id": "f2-cabos",
@@ -141,7 +149,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-regie",
@@ -152,7 +161,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-palco",
@@ -163,7 +173,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-ponto-luz",
@@ -174,7 +185,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-pint-baixo",
@@ -185,7 +197,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-pint-salao",
@@ -196,7 +209,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-tela",
@@ -207,7 +221,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-projetor",
@@ -218,7 +233,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f2-limpeza",
@@ -229,7 +245,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-teto",
@@ -240,7 +257,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-portao",
@@ -251,7 +269,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-fachada",
@@ -262,7 +281,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-alcatifa",
@@ -273,7 +293,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-limpeza",
@@ -284,7 +305,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-decoracao",
@@ -295,7 +317,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-salas-ed",
@@ -306,7 +329,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-som",
@@ -317,7 +341,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "f3-testes",
@@ -328,7 +353,8 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "",
-   "owner": ""
+   "owner": "",
+   "notes": ""
   },
   {
    "id": "tmvqqgl7c",
@@ -339,7 +365,8 @@
    "end": "2026-10-30",
    "pct": 0,
    "realStart": "",
-   "realEnd": ""
+   "realEnd": "",
+   "notes": ""
   },
   {
    "id": "tmvqqhhty",
@@ -350,7 +377,8 @@
    "end": "2026-10-26",
    "pct": 0,
    "realStart": "",
-   "realEnd": ""
+   "realEnd": "",
+   "notes": ""
   }
  ],
  "milestone": {

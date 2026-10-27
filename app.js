@@ -8,7 +8,7 @@ var art=null,timer=null,armed=null,saveMsg=window.PLANO.message||'',focusAfter=n
 var now=new Date(),TODAY=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
 S.tasks.forEach(function(k){
   if(k.pct==null){k.pct=k.status==='feito'?100:k.status==='em curso'?50:0}
-  delete k.status;if(k.realStart==null)k.realStart='';if(k.owner==null)k.owner='';if(k.realEnd==null)k.realEnd='';
+  delete k.status;if(k.realStart==null)k.realStart='';if(k.owner==null)k.owner='';if(k.notes==null)k.notes=k.note||'';delete k.note;if(k.realEnd==null)k.realEnd='';
 });
 function d(s){var p=s.split('-');return Date.UTC(+p[0],p[1]-1,+p[2])}
 function off(s){return (d(s)-START)/DAY}
@@ -56,7 +56,7 @@ function render(){
     if(ts.length){var sp=span(ts);h+='<div class="g-span" style="left:'+(off(sp[0])*PX)+'px;width:'+((off(sp[1])-off(sp[0])+1)*PX)+'px"></div>'}
     h+='</div></div>';
     ts.forEach(function(k){var st=slug(status(k)),lt=late(k);
-      var sub=[];if(k.note)sub.push(esc(k.note));if(lt)sub.push('<span class="late-t">atrasada</span>');
+      var sub=[];if(lt)sub.push('<span class="late-t">atrasada</span>');if(k.notes)sub.push('<span class="g-note" title="'+esc(k.notes)+'">'+esc(k.notes.split('\n')[0])+'</span>');
       h+='<div class="g-row" '+pc+'><div class="g-left"><button class="st st-'+st+'" data-cycle="'+k.id+'" aria-label="'+esc(k.name)+': '+k.pct+'% feito" title="'+k.pct+'% feito"></button><span class="g-name"><input class="gd gn" id="gn-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa">'+(sub.length?'<small>'+sub.join(' · ')+'</small>':'')+'</span><span class="g-dt g-ow g-ed"><input class="gd go" id="go-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="—" aria-label="Responsável por '+esc(k.name)+'"></span><span class="g-dt g-pc g-ed"><input class="gd gp" type="number" min="0" max="100" step="5" id="gp-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="% feita de '+esc(k.name)+'"></span>'+dcell(k,'start',k.realStart,false)+dcell(k,'end',k.realEnd,k.realEnd&&d(k.realEnd)>d(k.end))+'</div>'+
          '<div class="g-track" style="width:'+tw+'px"><div class="bar'+(lt?' b-late':'')+'" style="left:'+(off(k.start)*PX)+'px;width:'+(ndays(k)*PX)+'px" title="'+esc(k.name)+' · planeado '+fmt(k.start)+' – '+fmt(k.end)+'"><i class="fill" style="width:'+k.pct+'%"></i><span class="bar-d"><b>'+k.pct+'%</b> '+fmt(k.start)+(k.start!==k.end?' – '+fmt(k.end):'')+'</span></div>';
       if(k.realStart){var rs=d(k.realStart),re=k.realEnd?d(k.realEnd):Math.max(TODAY,rs);if(re<rs)re=rs;
@@ -75,10 +75,10 @@ function render(){
   // Planning
   h+='<section class="sec"><div class="sec-head"><h2>Planeamento</h2><span class="save" id="save">'+esc(saveMsg)+'</span></div>';
   h+='<p class="hint">As datas planeadas são uma estimativa. Ao passar de 0% é preenchido o início real com a data de hoje, e ao chegar a 100% a conclusão real; pode corrigir as duas.</p>';
-  h+='<div class="plan"><table><thead><tr><th class="c-name">Tarefa</th><th>Responsável</th><th colspan="2" class="grp">Planeado</th><th colspan="2" class="grp">Real</th><th>% feita</th><th></th></tr>'+
-     '<tr class="sub"><th></th><th></th><th>Início</th><th>Fim</th><th>Início</th><th>Conclusão</th><th></th><th></th></tr></thead><tbody>';
+  h+='<div class="plan"><table><thead><tr><th class="c-name">Tarefa</th><th>Responsável</th><th colspan="2" class="grp">Planeado</th><th colspan="2" class="grp">Real</th><th>% feita</th><th class="c-notes">Anotações</th><th></th></tr>'+
+     '<tr class="sub"><th></th><th></th><th>Início</th><th>Fim</th><th>Início</th><th>Conclusão</th><th></th><th></th><th></th></tr></thead><tbody>';
   S.phases.forEach(function(p){var pc='style="--pc:var('+p.color+')"';
-    h+='<tr class="ph-row" '+pc+'><td colspan="8"><i></i>'+esc(p.name)+'</td></tr>';
+    h+='<tr class="ph-row" '+pc+'><td colspan="9"><i></i>'+esc(p.name)+'</td></tr>';
     tasksOf(p.id).forEach(function(k){var lt=k.realEnd&&d(k.realEnd)>d(k.end);
       h+='<tr '+pc+'><td><input class="in" id="n-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa"></td>'+
         '<td><input class="in" id="o-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="Nome" aria-label="Responsável"></td>'+
@@ -87,8 +87,9 @@ function render(){
         '<td class="real-c"><input class="in" type="date" id="rs-'+k.id+'" data-id="'+k.id+'" data-f="realStart" value="'+k.realStart+'" aria-label="Início real"></td>'+
         '<td class="real-c"><input class="in'+(lt?' is-late':'')+'" type="date" id="re-'+k.id+'" data-id="'+k.id+'" data-f="realEnd" value="'+k.realEnd+'" aria-label="Conclusão real"></td>'+
         '<td><div class="pct"><input class="in" type="number" min="0" max="100" step="5" id="p-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="Percentagem feita"><span>%</span><i style="--w:'+k.pct+'%"></i></div></td>'+
+        '<td class="c-notes"><textarea class="in notes" rows="1" id="nt-'+k.id+'" data-id="'+k.id+'" data-f="notes" placeholder="Anotações" aria-label="Anotações de '+esc(k.name)+'">'+esc(k.notes)+'</textarea></td>'+
         '<td><button class="btn del'+(armed===k.id?' arm':'')+'" data-del="'+k.id+'">'+(armed===k.id?'Apagar?':'×')+'</button></td></tr>'});
-    h+='<tr '+pc+'><td colspan="8"><button class="btn add" data-add="'+p.id+'" data-where="t">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></td></tr>';
+    h+='<tr '+pc+'><td colspan="9"><button class="btn add" data-add="'+p.id+'" data-where="t">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></td></tr>';
   });
   h+='</tbody></table></div></section>';
   app.innerHTML=h;
@@ -110,7 +111,7 @@ app.addEventListener('click',function(e){
   var c=e.target.closest('[data-cycle]');
   if(c){var k=byId(c.dataset.cycle);setPct(k,k.pct>=100?0:k.pct>=50?100:50);if(k.pct===0){k.realStart='';k.realEnd=''}changed();return}
   var a=e.target.closest('[data-add]');
-  if(a){var p=phase(a.dataset.add),st=p.start;var nid='t'+Date.now().toString(36);S.tasks.push({id:nid,phase:p.id,name:'Nova tarefa',owner:'',start:st,end:iso(d(st)+2*DAY),pct:0,realStart:'',realEnd:''});armed=null;focusAfter=(a.dataset.where==='g'?'gn-':'n-')+nid;changed();return}
+  if(a){var p=phase(a.dataset.add),st=p.start;var nid='t'+Date.now().toString(36);S.tasks.push({id:nid,phase:p.id,name:'Nova tarefa',owner:'',notes:'',start:st,end:iso(d(st)+2*DAY),pct:0,realStart:'',realEnd:''});armed=null;focusAfter=(a.dataset.where==='g'?'gn-':'n-')+nid;changed();return}
   var x=e.target.closest('[data-del]');
   if(x){var id=x.dataset.del;if(armed===id){S.tasks=S.tasks.filter(function(t){return t.id!==id});S.deps=S.deps.filter(function(dp){return dp.before!==id&&dp.after!==id});armed=null;changed()}else{armed=id;render()}return}
   if(armed){armed=null;render()}
@@ -118,6 +119,7 @@ app.addEventListener('click',function(e){
 app.addEventListener('change',function(e){var el=e.target,id=el.dataset.id,f=el.dataset.f;if(!id||!f)return;var k=byId(id);if(!k)return;
   var v=el.value.trim();
   if(f==='owner'){k.owner=v;changed();return}
+  if(f==='notes'){k.notes=el.value.replace(/\s+$/,'');changed();return}
   if(f==='pct'){var n=Math.round(+v);if(v===''||isNaN(n)){render();return}setPct(k,Math.max(0,Math.min(100,n)));changed();return}
   if(f==='realStart'||f==='realEnd'){k[f]=v;if(k.realStart&&k.realEnd&&k.realEnd<k.realStart){if(f==='realStart')k.realEnd=v;else k.realStart=v}
     if(f==='realEnd'&&v&&k.pct<100)k.pct=100;changed();return}

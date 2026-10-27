@@ -11,6 +11,8 @@
 /* Página pública: só leitura */
 .btn.add,.btn.del,.g-add,.hint{display:none!important}
 .st{pointer-events:none}
+.in::placeholder{color:transparent}
+textarea.in.notes:disabled{resize:none}
 .in:disabled,.gd:disabled{opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink);cursor:default;border-color:transparent}
 .gd::-webkit-calendar-picker-indicator,.in::-webkit-calendar-picker-indicator{display:none}
 .ro{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-top:14px;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;color:var(--muted)}
@@ -26,7 +28,7 @@
   var app=document.getElementById('app');
   function when(iso){try{return new Date(iso).toLocaleString('pt-PT',{timeZone:'Europe/Lisbon',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
   function lock(){
-    app.querySelectorAll('input,select,button:not(.rf)').forEach(function(e){e.disabled=true;e.tabIndex=-1});
+    app.querySelectorAll('input,select,textarea,button:not(.rf)').forEach(function(e){e.disabled=true;e.tabIndex=-1});
     var lede=app.querySelector('header .lede');
     if(lede&&!app.querySelector('.ro')){var d=document.createElement('div');d.className='ro';
       var u=window.PLANO.data.updatedAt;

@@ -160,3 +160,10 @@ tr.sub th{padding-top:6px}
 .g-add .btn{padding:4px 10px;font-size:12px}
 @media (max-width:640px){.g-add .btn{white-space:nowrap}}
 table{min-width:1140px}
+
+/* Anotações */
+table{min-width:1400px}
+th.c-notes{width:260px}
+td.c-notes{min-width:220px}
+textarea.in.notes{display:block;resize:vertical;min-height:32px;font:13px/1.35 var(--f-body);field-sizing:content;max-height:9em}
+.g-note{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--f-body);font-style:italic}
