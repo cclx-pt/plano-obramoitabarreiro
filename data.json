@@ -329,6 +329,17 @@
    "realStart": "",
    "realEnd": "",
    "owner": ""
+  },
+  {
+   "id": "tmvqqgl7c",
+   "phase": "f1",
+   "name": "Nova tarefa",
+   "owner": "",
+   "start": "2026-10-01",
+   "end": "2026-10-03",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": ""
   }
  ],
  "milestone": {
@@ -384,5 +395,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:19:52Z"
+ "updatedAt": "2026-10-27T13:40:28Z"
 }
