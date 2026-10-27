@@ -25,7 +25,7 @@
    "phase": "f1",
    "name": "Salas de cima operacionais",
    "start": "2026-10-01",
-   "end": "2026-10-24",
+   "end": "2026-10-30",
    "pct": 90,
    "realStart": "2026-10-27",
    "realEnd": "",
@@ -406,5 +406,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T13:41:36Z"
+ "updatedAt": "2026-10-27T13:41:45Z"
 }
