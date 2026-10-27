@@ -98,7 +98,7 @@
    "name": "Normalizar piso da sala da ED (em baixo)",
    "start": "2026-10-20",
    "end": "2026-10-30",
-   "pct": 55,
+   "pct": 80,
    "realStart": "2026-10-27",
    "realEnd": "",
    "owner": "Anderson",
@@ -446,5 +446,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T21:43:07Z"
+ "updatedAt": "2026-10-27T21:43:24Z"
 }
