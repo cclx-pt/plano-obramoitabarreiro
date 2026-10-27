@@ -107,7 +107,7 @@
   {
    "id": "f1-luz",
    "phase": "f1",
-   "name": "Luz do salão",
+   "name": "Energia/Luz do Salão",
    "start": "2026-10-20",
    "end": "2026-10-31",
    "pct": 0,
@@ -446,5 +446,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T21:43:59Z"
+ "updatedAt": "2026-10-27T21:44:19Z"
 }
