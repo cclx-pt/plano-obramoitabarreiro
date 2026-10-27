@@ -398,8 +398,8 @@
    "name": "Andaime para som",
    "owner": "Pedro Jeremias",
    "notes": "",
-   "start": "2026-10-01",
-   "end": "2026-10-03",
+   "start": "2026-10-30",
+   "end": "2026-10-30",
    "pct": 0,
    "realStart": "",
    "realEnd": ""
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-10-27T22:20:36Z"
+ "updatedAt": "2026-10-27T22:20:42Z"
 }
