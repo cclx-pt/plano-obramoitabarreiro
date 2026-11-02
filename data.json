@@ -50,9 +50,9 @@
    "name": "WC operacionais (fase inicial)",
    "start": "2026-10-05",
    "end": "2026-10-30",
-   "pct": 20,
+   "pct": 100,
    "realStart": "2026-10-27",
-   "realEnd": "",
+   "realEnd": "2026-11-02",
    "owner": "Andersonta",
    "notes": "Tampas de sanita, e móvel + torneiras e acessórios"
   },
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-02T15:13:34Z"
+ "updatedAt": "2026-11-02T15:13:39Z"
 }
