@@ -375,9 +375,9 @@
    "owner": "Alexandro",
    "start": "2026-10-26",
    "end": "2026-10-26",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "",
+   "pct": 100,
+   "realStart": "2026-11-02",
+   "realEnd": "2026-11-02",
    "notes": ""
   },
   {
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-02T15:13:50Z"
+ "updatedAt": "2026-11-02T15:13:52Z"
 }
