@@ -122,9 +122,9 @@
    "name": "Bar (temporário)",
    "start": "2026-10-26",
    "end": "2026-10-31",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "",
+   "pct": 100,
+   "realStart": "2026-11-02",
+   "realEnd": "2026-11-02",
    "owner": "Marta",
    "notes": ""
   },
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-02T15:13:52Z"
+ "updatedAt": "2026-11-02T15:13:54Z"
 }
