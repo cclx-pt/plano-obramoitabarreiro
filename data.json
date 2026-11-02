@@ -134,9 +134,9 @@
    "name": "Limpeza de fim de fase",
    "start": "2026-10-30",
    "end": "2026-10-31",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "",
+   "pct": 100,
+   "realStart": "2026-11-02",
+   "realEnd": "2026-11-02",
    "owner": "Joka",
    "notes": ""
   },
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-02T15:14:07Z"
+ "updatedAt": "2026-11-02T15:14:17Z"
 }
