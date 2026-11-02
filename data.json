@@ -363,9 +363,9 @@
    "owner": "Anderson",
    "start": "2026-10-28",
    "end": "2026-10-30",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "",
+   "pct": 100,
+   "realStart": "2026-11-02",
+   "realEnd": "2026-11-02",
    "notes": ""
   },
   {
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-02T15:13:54Z"
+ "updatedAt": "2026-11-02T15:13:59Z"
 }
