@@ -500,19 +500,6 @@
    "pct": 0,
    "realStart": "",
    "realEnd": "2026-11-04"
-  },
-  {
-   "id": "tmw102qpx",
-   "phase": "f2",
-   "name": "Limpeza 4",
-   "area": "",
-   "owner": "",
-   "notes": "",
-   "start": "2026-11-28",
-   "end": "2026-11-28",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "2026-11-04"
   }
  ],
  "milestone": {
@@ -548,5 +535,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T18:07:43Z"
+ "updatedAt": "2026-11-03T18:07:56Z"
 }
