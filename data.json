@@ -168,10 +168,10 @@
    "phase": "f2",
    "name": "Régie",
    "start": "2026-11-02",
-   "end": "2026-11-13",
+   "end": "2026-11-07",
    "pct": 0,
    "realStart": "",
-   "realEnd": "2026-11-13",
+   "realEnd": "2026-11-07",
    "owner": "",
    "notes": "",
    "area": ""
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:57:25Z"
+ "updatedAt": "2026-11-03T13:57:30Z"
 }
