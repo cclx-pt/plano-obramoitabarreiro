@@ -425,7 +425,7 @@
   },
   {
    "id": "tmvr8amny",
-   "phase": "f1",
+   "phase": "f2",
    "name": "Andaime para som",
    "owner": "Pedro Jeremias",
    "notes": "",
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:43:59Z"
+ "updatedAt": "2026-11-03T13:50:04Z"
 }
