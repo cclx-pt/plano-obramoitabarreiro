@@ -206,7 +206,7 @@
    "id": "f2-pint-salao",
    "phase": "f2",
    "name": "Pinturas barrar e lixar sala Mamãs + Corredor + Sala multiusos",
-   "start": "2026-11-16",
+   "start": "2026-11-09",
    "end": "2026-11-27",
    "pct": 0,
    "realStart": "",
@@ -535,5 +535,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T21:29:31Z"
+ "updatedAt": "2026-11-03T21:29:39Z"
 }
