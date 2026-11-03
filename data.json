@@ -430,10 +430,10 @@
    "owner": "Pedro Ribeiro",
    "notes": "",
    "start": "2026-11-04",
-   "end": "2026-11-04",
+   "end": "2026-11-05",
    "pct": 0,
    "realStart": "",
-   "realEnd": "2026-11-04",
+   "realEnd": "2026-11-05",
    "area": ""
   },
   {
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:57:43Z"
+ "updatedAt": "2026-11-03T13:57:58Z"
 }
