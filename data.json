@@ -465,7 +465,7 @@
   {
    "id": "tmw101zm1",
    "phase": "f2",
-   "name": "Nova tarefa",
+   "name": "Limpeza 1",
    "area": "",
    "owner": "",
    "notes": "",
@@ -509,5 +509,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T18:06:45Z"
+ "updatedAt": "2026-11-03T18:06:51Z"
 }
