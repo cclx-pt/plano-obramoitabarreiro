@@ -182,3 +182,39 @@ tr.moved td{animation:moved 1.6s ease-out}
 .g-row:not(.g-phase) .g-dt.g-re{background:color-mix(in srgb,var(--ink) 3%,transparent);border-radius:4px}
 .g-dt.g-re.lt .gd{color:var(--today);font-weight:600;-webkit-text-fill-color:var(--today)}
 .g-head .g-dt.g-re{background:none}
+
+/* Datas dd/mm/aaaa com calendário */
+.dfield{position:relative;display:flex;align-items:center;min-width:0}
+.dfield .dtxt{flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-variant-numeric:tabular-nums;padding-right:24px}
+.in.dtxt{min-width:122px;font-size:12.5px}
+.gd.dtxt{font-size:11.5px}
+.dfield .cal{position:absolute;right:5px;top:50%;width:13px;height:13px;margin-top:-6.5px;pointer-events:none;opacity:.55;
+  background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 0h2v2h4V0h2v2h3v14H1V2h3zM3 6v8h10V6z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 0h2v2h4V0h2v2h3v14H1V2h3zM3 6v8h10V6z'/%3E%3C/svg%3E") center/contain no-repeat}
+.dfield .dpick{position:absolute;right:0;top:0;bottom:0;width:22px;opacity:0;padding:0;border:0;margin:0;cursor:pointer;color-scheme:inherit}
+.dfield .dpick::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:auto;height:auto;margin:0;cursor:pointer}
+.dfield:hover .cal{opacity:.9}
+.g-dt{flex-basis:124px}
+/* Fase no Gantt */
+:root{--lw:1010px}
+@media (max-width:640px){:root{--lw:170px}}
+.g-dt.g-fs{flex-basis:84px;text-align:left}
+.gsel{cursor:pointer;font-weight:600;color:var(--pc);-webkit-text-fill-color:var(--pc)}
+.g-row.moved .g-left{animation:moved 1.6s ease-out}
+@media (prefers-reduced-motion:reduce){.g-row.moved .g-left{animation:none}}
+
+/* Área, apagar no Gantt, ocultar colunas */
+:root{--lw:1150px}
+@media (max-width:640px){:root{--lw:170px}}
+.gantt.no-cols{--lw:300px}
+@media (max-width:640px){.gantt.no-cols{--lw:170px}}
+.gantt.no-cols .g-dt{display:none}
+.g-dt.g-ar{flex-basis:110px;text-align:left}
+.g-dt.g-del{flex-basis:30px;position:relative;text-align:right}
+.g-del .btn.del{padding:2px 7px}
+.g-del .btn.del.arm{position:absolute;right:0;top:50%;transform:translateY(-50%);white-space:nowrap;z-index:5}
+.btn.cols{font-size:12px;padding:4px 10px}
+th.c-area{width:130px}
+table{min-width:1640px}
+td.c-area .in{min-width:120px}
+td .in[data-f="owner"]{min-width:140px}
+td.c-phase select.in{min-width:100px}

@@ -5,13 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Plano da Obra</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="style.css">
+<script>document.write('<link rel="stylesheet" href="style.css?t='+Date.now()+'">')</script>
 <style>
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}
 /* Página pública: só leitura */
 .btn.add,.btn.del,.g-add,.hint{display:none!important}
 .st{pointer-events:none}
 .in::placeholder{color:transparent}
+.cal,.dpick{display:none!important}
+.dfield .dtxt{padding-right:4px}
 textarea.in.notes:disabled{resize:none}
 .in:disabled,.gd:disabled{opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink);cursor:default;border-color:transparent}
 .gd::-webkit-calendar-picker-indicator,.in::-webkit-calendar-picker-indicator{display:none}
