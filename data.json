@@ -192,7 +192,7 @@
   {
    "id": "f2-pint-baixo",
    "phase": "f2",
-   "name": "Lixar e pintar as salas de baixo",
+   "name": "barrar e lixar sala Mamãs + Corredor + Sala multiusos",
    "start": "2026-11-09",
    "end": "2026-11-20",
    "pct": 0,
@@ -485,5 +485,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:58:12Z"
+ "updatedAt": "2026-11-03T13:58:42Z"
 }
