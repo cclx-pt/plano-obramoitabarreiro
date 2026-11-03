@@ -30,7 +30,7 @@ textarea.in.notes:disabled{resize:none}
   var app=document.getElementById('app');
   function when(iso){try{return new Date(iso).toLocaleString('pt-PT',{timeZone:'Europe/Lisbon',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
   function lock(){
-    app.querySelectorAll('input,select,textarea,button:not(.rf):not(.tab):not(.zm):not(.cols)').forEach(function(e){e.disabled=true;e.tabIndex=-1});
+    app.querySelectorAll('input,select,textarea,button:not(.rf):not(.tab):not(.zm):not(.cols):not(.coll):not(.collall)').forEach(function(e){e.disabled=true;e.tabIndex=-1});
     var lede=app.querySelector('header .lede');
     if(lede&&!app.querySelector('.ro')){var d=document.createElement('div');d.className='ro';
       var u=window.PLANO.data.updatedAt;
