@@ -25,6 +25,7 @@ function span(ts){var a=ts[0].start,b=ts[0].end;ts.forEach(function(t){if(t.star
 function ndays(t){return Math.round((d(t.end)-d(t.start))/DAY)+1}
 function phase(id){for(var i=0;i<S.phases.length;i++)if(S.phases[i].id===id)return S.phases[i]}
 function late(k){if(k.realEnd)return d(k.realEnd)>d(k.end);return k.pct<100&&TODAY>d(k.end)}
+function rcell(k){var lt=k.realEnd&&d(k.realEnd)>d(k.end);return '<span class="g-dt g-ed g-re'+(lt?' lt':'')+'"><input class="gd" type="date" id="gre-'+k.id+'" data-id="'+k.id+'" data-f="realEnd" value="'+k.realEnd+'" aria-label="Data real de conclusão de '+esc(k.name)+'" title="Data real de conclusão'+(lt?' (depois do fim planeado)':'')+'"></span>'}
 function dcell(k,f,r,lt){return '<span class="g-dt g-ed"><input class="gd" type="date" id="g'+f+'-'+k.id+'" data-id="'+k.id+'" data-f="'+f+'" value="'+k[f]+'" aria-label="'+(f==='start'?'Início':'Fim')+' planeado de '+esc(k.name)+'">'+(r?'<small'+(lt?' class="lt"':'')+'>real '+fmt(r)+'</small>':'')+'</span>'}
 function phasePct(ts){if(!ts.length)return 0;var w=0,s=0;ts.forEach(function(k){var n=ndays(k);w+=n;s+=n*k.pct});return Math.round(s/w)}
 
@@ -40,7 +41,7 @@ function render(){
   // Gantt
   h+='<section class="sec"><div class="sec-head"><h2>Gantt</h2><div class="legend"><span><i class="lg l-plan"></i>Planeado, preenchido até à % feita</span><span><i class="lg l-real"></i>Real (início a conclusão)</span><span><i class="lg l-hoje"></i>Hoje</span></div></div>';
   h+='<p class="hint">O círculo de cada tarefa avança 0% → 50% → 100%. Nome, responsável, % feita e datas editam-se diretamente aqui ou no planeamento, mais abaixo.</p>';
-  h+='<div class="gantt"><div class="gi" style="width:calc(var(--lw) + '+tw+'px)"><div class="g-head"><div class="g-left"><span class="g-name">Tarefa</span><span class="g-dt g-ow">Responsável</span><span class="g-dt g-pc">%</span><span class="g-dt">Início</span><span class="g-dt">Fim</span></div><div class="g-scale" style="width:'+tw+'px">';
+  h+='<div class="gantt"><div class="gi" style="width:calc(var(--lw) + '+tw+'px)"><div class="g-head"><div class="g-left"><span class="g-name">Tarefa</span><span class="g-dt g-ow">Responsável</span><span class="g-dt g-pc">%</span><span class="g-dt">Início</span><span class="g-dt">Fim</span><span class="g-dt g-re">Concluído</span></div><div class="g-scale" style="width:'+tw+'px">';
   var t,mo=[];
   for(t=START;t<END;){var x=new Date(t),nx=Date.UTC(x.getUTCFullYear(),x.getUTCMonth()+1,1);mo.push([t,nx]);t=nx}
   mo.forEach(function(m){var x=new Date(m[0]);h+='<div class="m-lbl" style="left:'+(offT(m[0])*PX)+'px;width:'+((m[1]-m[0])/DAY*PX)+'px">'+MESL[x.getUTCMonth()]+'</div>'});
@@ -52,12 +53,12 @@ function render(){
   if(TODAY>=START&&TODAY<END)h+='<div class="today" style="left:'+(offT(TODAY)*PX+PX/2)+'px"><b>Hoje</b></div>';
   h+='</div>';
   S.phases.forEach(function(p){var ts=tasksOf(p.id);var pc='style="--pc:var('+p.color+')"';
-    var ps=ts.length?span(ts):null;h+='<div class="g-row g-phase" '+pc+'><div class="g-left"><span class="g-name">'+esc(p.name)+'</span><span class="g-dt g-ow"></span><span class="g-dt g-pc">'+phasePct(ts)+'%</span><span class="g-dt">'+(ps?fmt(ps[0]):'')+'</span><span class="g-dt">'+(ps?fmt(ps[1]):'')+'</span></div><div class="g-track" style="width:'+tw+'px">';
+    var ps=ts.length?span(ts):null;h+='<div class="g-row g-phase" '+pc+'><div class="g-left"><span class="g-name">'+esc(p.name)+'</span><span class="g-dt g-ow"></span><span class="g-dt g-pc">'+phasePct(ts)+'%</span><span class="g-dt">'+(ps?fmt(ps[0]):'')+'</span><span class="g-dt">'+(ps?fmt(ps[1]):'')+'</span><span class="g-dt g-re"></span></div><div class="g-track" style="width:'+tw+'px">';
     if(ts.length){var sp=span(ts);h+='<div class="g-span" style="left:'+(off(sp[0])*PX)+'px;width:'+((off(sp[1])-off(sp[0])+1)*PX)+'px"></div>'}
     h+='</div></div>';
     ts.forEach(function(k){var st=slug(status(k)),lt=late(k);
       var sub=[];if(lt)sub.push('<span class="late-t">atrasada</span>');if(k.notes)sub.push('<span class="g-note" title="'+esc(k.notes)+'">'+esc(k.notes.split('\n')[0])+'</span>');
-      h+='<div class="g-row" '+pc+'><div class="g-left"><button class="st st-'+st+'" data-cycle="'+k.id+'" aria-label="'+esc(k.name)+': '+k.pct+'% feito" title="'+k.pct+'% feito"></button><span class="g-name"><input class="gd gn" id="gn-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa">'+(sub.length?'<small>'+sub.join(' · ')+'</small>':'')+'</span><span class="g-dt g-ow g-ed"><input class="gd go" id="go-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="—" aria-label="Responsável por '+esc(k.name)+'"></span><span class="g-dt g-pc g-ed"><input class="gd gp" type="number" min="0" max="100" step="5" id="gp-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="% feita de '+esc(k.name)+'"></span>'+dcell(k,'start',k.realStart,false)+dcell(k,'end',k.realEnd,k.realEnd&&d(k.realEnd)>d(k.end))+'</div>'+
+      h+='<div class="g-row" '+pc+'><div class="g-left"><button class="st st-'+st+'" data-cycle="'+k.id+'" aria-label="'+esc(k.name)+': '+k.pct+'% feito" title="'+k.pct+'% feito"></button><span class="g-name"><input class="gd gn" id="gn-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa">'+(sub.length?'<small>'+sub.join(' · ')+'</small>':'')+'</span><span class="g-dt g-ow g-ed"><input class="gd go" id="go-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="—" aria-label="Responsável por '+esc(k.name)+'"></span><span class="g-dt g-pc g-ed"><input class="gd gp" type="number" min="0" max="100" step="5" id="gp-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="% feita de '+esc(k.name)+'"></span>'+dcell(k,'start',k.realStart,false)+dcell(k,'end','',false)+rcell(k)+'</div>'+
          '<div class="g-track" style="width:'+tw+'px"><div class="bar'+(lt?' b-late':'')+'" style="left:'+(off(k.start)*PX)+'px;width:'+(ndays(k)*PX)+'px" title="'+esc(k.name)+' · planeado '+fmt(k.start)+' – '+fmt(k.end)+'"><i class="fill" style="width:'+k.pct+'%"></i><span class="bar-d"><b>'+k.pct+'%</b> '+fmt(k.start)+(k.start!==k.end?' – '+fmt(k.end):'')+'</span></div>';
       if(k.realStart){var rs=d(k.realStart),re=k.realEnd?d(k.realEnd):Math.max(TODAY,rs);if(re<rs)re=rs;
         h+='<div class="real'+(k.realEnd?'':' open')+'" style="left:'+(offT(rs)*PX)+'px;width:'+(((re-rs)/DAY+1)*PX)+'px" title="Real: '+fmt(k.realStart)+' – '+(k.realEnd?fmt(k.realEnd):'em curso')+'"></div>'}
@@ -65,7 +66,7 @@ function render(){
     h+='<div class="g-row g-add" '+pc+'><div class="g-left"><button class="btn add" data-add="'+p.id+'" data-where="g">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></div><div class="g-track" style="width:'+tw+'px"></div></div>';
   });
   var M=S.milestone;
-  h+='<div class="g-row"><div class="g-left"><span class="g-name"><b>'+esc(M.name)+'</b><small>'+esc(M.note)+'</small></span><span class="g-dt g-ow"></span><span class="g-dt g-pc"></span><span class="g-dt">jan</span><span class="g-dt"><small>a decidir</small></span></div><div class="g-track" style="width:'+tw+'px"><div class="ms-band" style="left:'+(off(M.start)*PX)+'px;width:'+((off(M.end)-off(M.start)+1)*PX)+'px"><span>'+esc(M.name)+' · a decidir</span></div></div></div>';
+  h+='<div class="g-row"><div class="g-left"><span class="g-name"><b>'+esc(M.name)+'</b><small>'+esc(M.note)+'</small></span><span class="g-dt g-ow"></span><span class="g-dt g-pc"></span><span class="g-dt">jan</span><span class="g-dt"><small>a decidir</small></span><span class="g-dt g-re"></span></div><div class="g-track" style="width:'+tw+'px"><div class="ms-band" style="left:'+(off(M.start)*PX)+'px;width:'+((off(M.end)-off(M.start)+1)*PX)+'px"><span>'+esc(M.name)+' · a decidir</span></div></div></div>';
   h+='</div></div></div></section>';
   // Sequence
   var bad=0,items='';
