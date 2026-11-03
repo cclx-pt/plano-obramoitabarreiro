@@ -426,7 +426,7 @@
   {
    "id": "tmvr8amny",
    "phase": "f2",
-   "name": "Andaime para som",
+   "name": "Andaime para instalação teto",
    "owner": "Pedro Jeremias",
    "notes": "",
    "start": "2026-11-04",
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:50:04Z"
+ "updatedAt": "2026-11-03T13:50:34Z"
 }
