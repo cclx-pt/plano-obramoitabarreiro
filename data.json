@@ -495,6 +495,19 @@
    "area": "",
    "owner": "",
    "notes": "",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "2026-11-04"
+  },
+  {
+   "id": "tmw102qpx",
+   "phase": "f2",
+   "name": "Nova tarefa",
+   "area": "",
+   "owner": "",
+   "notes": "",
    "start": "2026-11-02",
    "end": "2026-11-04",
    "pct": 0,
@@ -535,5 +548,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T18:07:14Z"
+ "updatedAt": "2026-11-03T18:07:20Z"
 }
