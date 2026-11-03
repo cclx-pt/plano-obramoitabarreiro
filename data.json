@@ -54,7 +54,7 @@
    "end": "2026-10-30",
    "pct": 100,
    "realStart": "2026-10-27",
-   "realEnd": "2026-11-02",
+   "realEnd": "2026-10-31",
    "owner": "Andersonta",
    "notes": "Tampas de sanita, e móvel + torneiras e acessórios",
    "area": ""
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:43:48Z"
+ "updatedAt": "2026-11-03T13:43:59Z"
 }
