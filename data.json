@@ -438,7 +438,7 @@
   },
   {
    "id": "tmvr8rdvz",
-   "phase": "f1",
+   "phase": "f2",
    "name": "Reparar chão da entrada",
    "owner": "Anderson",
    "notes": "",
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:43:36Z"
+ "updatedAt": "2026-11-03T13:43:40Z"
 }
