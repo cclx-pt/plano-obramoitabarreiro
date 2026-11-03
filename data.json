@@ -190,19 +190,6 @@
    "area": ""
   },
   {
-   "id": "f2-ponto-luz",
-   "phase": "f2",
-   "name": "Ponto de luz para decoração e TVs de parede",
-   "start": "2026-11-09",
-   "end": "2026-11-13",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "2026-11-13",
-   "owner": "",
-   "notes": "",
-   "area": ""
-  },
-  {
    "id": "f2-pint-baixo",
    "phase": "f2",
    "name": "Lixar e pintar as salas de baixo",
@@ -463,11 +450,6 @@
    "why": "Os cabos ficam no suporte antes de fechar o teto."
   },
   {
-   "before": "f2-ponto-luz",
-   "after": "f3-teto",
-   "why": "Pontos de luz e cabos das TVs antes do teto."
-  },
-  {
    "before": "f2-pint-salao",
    "after": "f3-alcatifa",
    "why": "Pinturas interiores antes da alcatifa, para não a sujar."
@@ -503,5 +485,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:57:58Z"
+ "updatedAt": "2026-11-03T13:58:12Z"
 }
