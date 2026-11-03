@@ -412,7 +412,7 @@
   },
   {
    "id": "tmvr7isyk",
-   "phase": "f1",
+   "phase": "f2",
    "name": "Colocar tampão no esgoto sala de cima e tamponar torneira",
    "owner": "Anderson",
    "notes": "",
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:39:15Z"
+ "updatedAt": "2026-11-03T13:43:36Z"
 }
