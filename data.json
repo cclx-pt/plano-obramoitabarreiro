@@ -453,7 +453,7 @@
    "id": "tmw100hdb",
    "phase": "f2",
    "name": "Coluna som Bar",
-   "area": "",
+   "area": "Som",
    "owner": "",
    "notes": "",
    "start": "2026-11-02",
@@ -496,5 +496,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T18:05:39Z"
+ "updatedAt": "2026-11-03T18:05:43Z"
 }
