@@ -155,10 +155,10 @@
    "phase": "f2",
    "name": "Passar cabos para o suporte do teto",
    "start": "2026-11-02",
-   "end": "2026-11-20",
+   "end": "2026-11-13",
    "pct": 0,
    "realStart": "",
-   "realEnd": "2026-11-20",
+   "realEnd": "2026-11-13",
    "owner": "",
    "notes": "",
    "area": "Teto"
@@ -535,5 +535,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T21:29:42Z"
+ "updatedAt": "2026-11-03T21:41:07Z"
 }
