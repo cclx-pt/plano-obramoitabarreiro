@@ -205,7 +205,7 @@
   {
    "id": "f2-pint-salao",
    "phase": "f2",
-   "name": "Pinturas (salão e entrada)",
+   "name": "Pinturas barrar e lixar sala Mamãs + Corredor + Sala multiusos",
    "start": "2026-11-16",
    "end": "2026-11-27",
    "pct": 0,
@@ -485,5 +485,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:58:42Z"
+ "updatedAt": "2026-11-03T13:58:53Z"
 }
