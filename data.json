@@ -466,7 +466,7 @@
    "id": "tmw101zm1",
    "phase": "f2",
    "name": "Limpeza 1",
-   "area": "",
+   "area": "Limpeza",
    "owner": "",
    "notes": "",
    "start": "2026-11-07",
@@ -548,5 +548,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T18:07:27Z"
+ "updatedAt": "2026-11-03T18:07:33Z"
 }
