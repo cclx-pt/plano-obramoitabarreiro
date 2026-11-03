@@ -422,6 +422,19 @@
    "realStart": "",
    "realEnd": "2026-10-03",
    "area": ""
+  },
+  {
+   "id": "tmw0zt17r",
+   "phase": "f2",
+   "name": "Nova tarefa",
+   "area": "",
+   "owner": "",
+   "notes": "",
+   "start": "2026-11-02",
+   "end": "2026-11-04",
+   "pct": 0,
+   "realStart": "",
+   "realEnd": "2026-11-04"
   }
  ],
  "milestone": {
@@ -457,5 +470,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T17:59:36Z"
+ "updatedAt": "2026-11-03T17:59:47Z"
 }
