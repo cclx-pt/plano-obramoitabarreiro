@@ -242,3 +242,21 @@ td.c-act .btn{margin-left:4px}
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 0h11v11H5zM7 2v7h7V2zM0 5h3v2H2v7h7v-1h2v3H0z'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 0h11v11H5zM7 2v7h7V2zM0 5h3v2H2v7h7v-1h2v3H0z'/%3E%3C/svg%3E") center/contain no-repeat}
 .btn.dup:hover{color:var(--ink)}
+
+/* Separadores e Gantt grande */
+#app{max-width:1840px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:-12px;overflow-x:auto}
+.tab{appearance:none;border:0;background:none;padding:10px 16px;font:700 15px var(--f-display);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--ink);border-bottom-color:var(--p1)}
+.g-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.g-tools .zl{font:600 10.5px var(--f-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-right:2px}
+.btn.zm{min-width:32px;padding:4px 10px;font-size:13px}
+.btn.zm:disabled{opacity:.4;cursor:default}
+.pane-gantt .gantt{max-height:calc(100vh - 150px);min-height:480px;overflow:auto}
+.pane-gantt .g-head{position:sticky;top:0;z-index:6;background:var(--surface)}
+.pane-gantt .g-head .g-left{z-index:7}
+.g-row{min-height:46px}
+.bar{height:18px;margin-top:-12px}
+.pane[hidden],[hidden]{display:none!important}
+td .in[data-f="name"]{min-width:280px}

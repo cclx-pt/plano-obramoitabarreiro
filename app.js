@@ -1,10 +1,15 @@
 (function(){
 var S=window.PLANO.data,RO=window.PLANO.readOnly;
-var DAY=864e5,PX=7;
+var DAY=864e5,ZOOMS=[6,9,12,16,22],ZI=2;try{var z=+localStorage.getItem('plano-zoom');if(z>=0&&z<ZOOMS.length&&localStorage.getItem('plano-zoom')!==null)ZI=z}catch(_){}
+var PX=ZOOMS[ZI];
+var TABS={gantt:'Gantt',tarefas:'Tarefas',sequencia:'Sequência'};
+function hashTab(){var t=(location.hash||'').slice(1);return TABS[t]?t:null}
+var TAB=hashTab();if(!TAB){try{TAB=localStorage.getItem('plano-tab')}catch(_){}if(!TABS[TAB])TAB='gantt'}
+var scrolledToday=false;
 var START=Date.UTC(2026,9,1),END=Date.UTC(2027,1,1);
 var MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 var MESL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-var showCols=true;try{showCols=localStorage.getItem('plano-cols')!=='0'}catch(_){}
+var showCols=false;try{showCols=localStorage.getItem('plano-cols2')==='1'}catch(_){}
 var art=null,timer=null,armed=null,saveMsg=window.PLANO.message||'',focusAfter=null,movedId=null;
 var now=new Date(),TODAY=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
 S.tasks.forEach(function(k){
@@ -50,9 +55,10 @@ function render(){
   S.phases.forEach(function(p){var ts=tasksOf(p.id),dn=ts.filter(function(t){return t.pct>=100}).length,pct=phasePct(ts),lt=ts.filter(late).length;
     h+='<div class="ph" style="--pc:var('+p.color+')"><div class="ph-name"><i></i>'+esc(p.name)+'<b class="ph-pct">'+pct+'%</b></div><div class="ph-dates">'+range(ts)+'</div><div class="ph-bar"><span style="width:'+pct+'%"></span></div><div class="ph-count">'+dn+' de '+ts.length+' concluídas'+(lt?' · <span class="late-t">'+lt+' atrasada'+(lt>1?'s':'')+'</span>':'')+'</div></div>'});
   h+='</div></header>';
+  h+='<nav class="tabs" role="tablist">'+Object.keys(TABS).map(function(t){return '<button class="tab'+(t===TAB?' on':'')+'" type="button" role="tab" aria-selected="'+(t===TAB)+'" data-tab="'+t+'">'+TABS[t]+'</button>'}).join('')+'</nav>';
   // Gantt
-  h+='<section class="sec"><div class="sec-head"><h2>Gantt</h2><div class="legend"><span><i class="lg l-plan"></i>Planeado, preenchido até à % feita</span><span><i class="lg l-real"></i>Real (início a conclusão)</span><span><i class="lg l-hoje"></i>Hoje</span></div><button class="btn cols" type="button" data-cols="1">'+(showCols?'Ocultar colunas':'Mostrar colunas')+'</button></div>';
-  h+='<p class="hint">O círculo de cada tarefa avança 0% → 50% → 100%. Nome, responsável, % feita e datas editam-se diretamente aqui ou no planeamento, mais abaixo.</p>';
+  h+='<section class="sec pane pane-gantt"'+(TAB==='gantt'?'':' hidden')+'><div class="sec-head"><h2>Gantt</h2><div class="legend"><span><i class="lg l-plan"></i>Planeado, preenchido até à % feita</span><span><i class="lg l-real"></i>Real (início a conclusão)</span><span><i class="lg l-hoje"></i>Hoje</span></div><div class="g-tools"><span class="zl">Zoom</span><button class="btn zm" type="button" data-zoom="-1" aria-label="Diminuir zoom"'+(ZI===0?' disabled':'')+'>−</button><button class="btn zm" type="button" data-zoom="1" aria-label="Aumentar zoom"'+(ZI===ZOOMS.length-1?' disabled':'')+'>+</button><button class="btn zm" type="button" data-today="1">Hoje</button><button class="btn cols" type="button" data-cols="1">'+(showCols?'Ocultar colunas':'Mostrar colunas')+'</button></div></div>';
+  h+='<p class="hint">O círculo de cada tarefa avança 0% → 50% → 100%. Para editar fase, área, responsável, datas e anotações use o separador Tarefas, ou carregue em Mostrar colunas.</p>';
   h+='<div class="gantt'+(showCols?'':' no-cols')+'"><div class="gi" style="width:calc(var(--lw) + '+tw+'px)"><div class="g-head"><div class="g-left"><span class="g-name">Tarefa</span></div><div class="g-cols"><span class="g-dt g-fs">Fase</span><span class="g-dt g-ar">Área</span><span class="g-dt g-ow">Responsável</span><span class="g-dt g-pc">%</span><span class="g-dt">Início</span><span class="g-dt">Fim</span><span class="g-dt g-re">Concluído</span><span class="g-dt g-del"></span></div><div class="g-scale" style="width:'+tw+'px">';
   var t,mo=[];
   for(t=START;t<END;){var x=new Date(t),nx=Date.UTC(x.getUTCFullYear(),x.getUTCMonth()+1,1);mo.push([t,nx]);t=nx}
@@ -85,9 +91,9 @@ function render(){
   var bad=0,items='';
   S.deps.forEach(function(dp){var a=byId(dp.before),b=byId(dp.after);if(!a||!b)return;var ok=d(b.start)>d(a.end);if(!ok)bad++;
     items+='<li class="'+(ok?'':'bad')+'"><span class="ck">'+(ok?'✓':'!')+'</span><p>'+esc(a.name)+' → '+esc(b.name)+'<small>'+esc(dp.why)+(ok?'':' Datas sobrepostas: '+fmt(a.end)+' / '+fmt(b.start)+'.')+'</small></p></li>'});
-  h+='<section class="sec"><div class="sec-head"><h2>Sequência</h2><span class="save">'+(bad?bad+' ponto'+(bad>1?'s':'')+' a rever':'Tudo pela ordem certa')+'</span></div><ul class="checks">'+items+'</ul></section>';
+  h+='<section class="sec pane"'+(TAB==='sequencia'?'':' hidden')+'><div class="sec-head"><h2>Sequência</h2><span class="save">'+(bad?bad+' ponto'+(bad>1?'s':'')+' a rever':'Tudo pela ordem certa')+'</span></div><ul class="checks">'+items+'</ul></section>';
   // Planning
-  h+='<section class="sec"><div class="sec-head"><h2>Planeamento</h2><span class="save" id="save">'+esc(saveMsg)+'</span></div>';
+  h+='<section class="sec pane"'+(TAB==='tarefas'?'':' hidden')+'><div class="sec-head"><h2>Tarefas</h2><span class="save" id="save">'+esc(saveMsg)+'</span></div>';
   h+='<p class="hint">As datas planeadas são uma estimativa. Ao passar de 0% é preenchido o início real com a data de hoje, e ao chegar a 100% a conclusão real; pode corrigir as duas.</p>';
   h+='<div class="plan"><table><thead><tr><th class="c-name">Tarefa</th><th class="c-phase">Fase</th><th class="c-area">Área</th><th>Responsável</th><th colspan="2" class="grp">Planeado</th><th colspan="2" class="grp">Real</th><th>% feita</th><th class="c-notes">Anotações</th><th></th></tr>'+
      '<tr class="sub"><th></th><th></th><th></th><th></th><th>Início</th><th>Fim</th><th>Início</th><th>Conclusão</th><th></th><th></th><th></th></tr></thead><tbody>';
@@ -126,7 +132,10 @@ function setPct(k,v){var was=k.pct;k.pct=v;
   if(v<100&&was>=100)k.realEnd=k.end;}
 var app=document.getElementById('app');
 app.addEventListener('click',function(e){
-  if(e.target.closest('[data-cols]')){showCols=!showCols;try{localStorage.setItem('plano-cols',showCols?'1':'0')}catch(_){}render();return}
+  if(e.target.closest('[data-cols]')){showCols=!showCols;try{localStorage.setItem('plano-cols2',showCols?'1':'0')}catch(_){}render();return}
+  var tb=e.target.closest('[data-tab]');if(tb){setTab(tb.dataset.tab);return}
+  var zb=e.target.closest('[data-zoom]');if(zb){var g=document.querySelector('.gantt'),mid=g?(g.scrollLeft+g.clientWidth/2-gLeft())/PX:0;ZI=Math.max(0,Math.min(ZOOMS.length-1,ZI+(+zb.dataset.zoom)));PX=ZOOMS[ZI];try{localStorage.setItem('plano-zoom',ZI)}catch(_){}render();g=document.querySelector('.gantt');if(g)g.scrollLeft=mid*PX+gLeft()-g.clientWidth/2;return}
+  if(e.target.closest('[data-today]')){toToday();return}
   var c=e.target.closest('[data-cycle]');
   if(c){var k=byId(c.dataset.cycle);setPct(k,k.pct>=100?0:k.pct>=50?100:50);if(k.pct===0){k.realStart='';k.realEnd=k.end}changed();return}
   var a=e.target.closest('[data-add]');
@@ -157,5 +166,10 @@ app.addEventListener('change',function(e){var el=e.target,id=el.dataset.id,f=el.
 app.addEventListener('click',function(e){var p=e.target.closest('.dpick');if(p&&p.showPicker){try{p.showPicker()}catch(_){}}});
 app.addEventListener('input',function(e){var el=e.target;if(!el.classList||!el.classList.contains('dtxt')||e.inputType!=='insertText')return;
   if(/^\d{2}$/.test(el.value)||/^\d{2}\/\d{2}$/.test(el.value))el.value+='/'});
+function gLeft(){var g=document.querySelector('.gantt .g-head .g-left'),c=document.querySelector('.gantt .g-head .g-cols');return (g?g.offsetWidth:0)+(c&&c.offsetParent?c.offsetWidth:0)}
+function toToday(){var g=document.querySelector('.gantt');if(!g||g.closest('[hidden]'))return;g.scrollLeft=Math.max(0,offT(TODAY)*PX-g.clientWidth*0.3+gLeft()*0.3)}
+function setTab(t){if(!TABS[t])return;TAB=t;try{localStorage.setItem('plano-tab',t)}catch(_){}if(location.hash!=='#'+t){try{history.replaceState(null,'','#'+t)}catch(_){location.hash=t}}render();if(t==='gantt'&&!scrolledToday){scrolledToday=true;toToday()}}
+window.addEventListener('hashchange',function(){var t=hashTab();if(t&&t!==TAB)setTab(t)});
 render();
+if(TAB==='gantt'){scrolledToday=true;toToday()}
 })();
