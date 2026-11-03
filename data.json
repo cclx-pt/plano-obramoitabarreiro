@@ -230,7 +230,7 @@
   },
   {
    "id": "f2-projetor",
-   "phase": "f2",
+   "phase": "f1",
    "name": "Projetor principal",
    "start": "2026-11-23",
    "end": "2026-11-27",
@@ -485,5 +485,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:58:57Z"
+ "updatedAt": "2026-11-03T13:59:01Z"
 }
