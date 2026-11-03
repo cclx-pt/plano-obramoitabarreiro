@@ -479,7 +479,7 @@
    "id": "tmw102bmk",
    "phase": "f2",
    "name": "Limpeza 2",
-   "area": "",
+   "area": "Limpeza",
    "owner": "",
    "notes": "",
    "start": "2026-11-14",
@@ -548,5 +548,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T18:07:33Z"
+ "updatedAt": "2026-11-03T18:07:35Z"
 }
