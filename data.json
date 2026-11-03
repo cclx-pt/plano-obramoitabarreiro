@@ -442,8 +442,8 @@
    "name": "Reparar chão da entrada",
    "owner": "Anderson",
    "notes": "",
-   "start": "2026-10-01",
-   "end": "2026-10-03",
+   "start": "2026-11-01",
+   "end": "2026-11-01",
    "pct": 0,
    "realStart": "",
    "realEnd": "2026-10-03",
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:56:54Z"
+ "updatedAt": "2026-11-03T13:56:58Z"
 }
