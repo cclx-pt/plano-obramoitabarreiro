@@ -4,7 +4,7 @@ var DAY=864e5,PX=7;
 var START=Date.UTC(2026,9,1),END=Date.UTC(2027,1,1);
 var MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 var MESL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-var art=null,timer=null,armed=null,saveMsg=window.PLANO.message||'',focusAfter=null;
+var art=null,timer=null,armed=null,saveMsg=window.PLANO.message||'',focusAfter=null,movedId=null;
 var now=new Date(),TODAY=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
 S.tasks.forEach(function(k){
   if(k.pct==null){k.pct=k.status==='feito'?100:k.status==='em curso'?50:0}
@@ -75,12 +75,13 @@ function render(){
   // Planning
   h+='<section class="sec"><div class="sec-head"><h2>Planeamento</h2><span class="save" id="save">'+esc(saveMsg)+'</span></div>';
   h+='<p class="hint">As datas planeadas são uma estimativa. Ao passar de 0% é preenchido o início real com a data de hoje, e ao chegar a 100% a conclusão real; pode corrigir as duas.</p>';
-  h+='<div class="plan"><table><thead><tr><th class="c-name">Tarefa</th><th>Responsável</th><th colspan="2" class="grp">Planeado</th><th colspan="2" class="grp">Real</th><th>% feita</th><th class="c-notes">Anotações</th><th></th></tr>'+
-     '<tr class="sub"><th></th><th></th><th>Início</th><th>Fim</th><th>Início</th><th>Conclusão</th><th></th><th></th><th></th></tr></thead><tbody>';
+  h+='<div class="plan"><table><thead><tr><th class="c-name">Tarefa</th><th class="c-phase">Fase</th><th>Responsável</th><th colspan="2" class="grp">Planeado</th><th colspan="2" class="grp">Real</th><th>% feita</th><th class="c-notes">Anotações</th><th></th></tr>'+
+     '<tr class="sub"><th></th><th></th><th></th><th>Início</th><th>Fim</th><th>Início</th><th>Conclusão</th><th></th><th></th><th></th></tr></thead><tbody>';
   S.phases.forEach(function(p){var pc='style="--pc:var('+p.color+')"';
-    h+='<tr class="ph-row" '+pc+'><td colspan="9"><i></i>'+esc(p.name)+'</td></tr>';
+    h+='<tr class="ph-row" '+pc+'><td colspan="10"><i></i>'+esc(p.name)+'</td></tr>';
     tasksOf(p.id).forEach(function(k){var lt=k.realEnd&&d(k.realEnd)>d(k.end);
       h+='<tr '+pc+'><td><input class="in" id="n-'+k.id+'" data-id="'+k.id+'" data-f="name" value="'+esc(k.name)+'" aria-label="Nome da tarefa"></td>'+
+        '<td class="c-phase"><select class="in ph-sel" id="ph-'+k.id+'" data-id="'+k.id+'" data-f="phase" aria-label="Mover '+esc(k.name)+' para outra fase">'+S.phases.map(function(q){return '<option value="'+q.id+'"'+(q.id===k.phase?' selected':'')+'>'+esc(q.name.split(' · ')[0])+'</option>'}).join('')+'</select></td>'+
         '<td><input class="in" id="o-'+k.id+'" data-id="'+k.id+'" data-f="owner" value="'+esc(k.owner)+'" placeholder="Nome" aria-label="Responsável"></td>'+
         '<td><input class="in" type="date" id="s-'+k.id+'" data-id="'+k.id+'" data-f="start" value="'+k.start+'" aria-label="Início planeado"></td>'+
         '<td><input class="in" type="date" id="e-'+k.id+'" data-id="'+k.id+'" data-f="end" value="'+k.end+'" aria-label="Fim planeado"></td>'+
@@ -89,11 +90,12 @@ function render(){
         '<td><div class="pct"><input class="in" type="number" min="0" max="100" step="5" id="p-'+k.id+'" data-id="'+k.id+'" data-f="pct" value="'+k.pct+'" aria-label="Percentagem feita"><span>%</span><i style="--w:'+k.pct+'%"></i></div></td>'+
         '<td class="c-notes"><textarea class="in notes" rows="1" id="nt-'+k.id+'" data-id="'+k.id+'" data-f="notes" placeholder="Anotações" aria-label="Anotações de '+esc(k.name)+'">'+esc(k.notes)+'</textarea></td>'+
         '<td><button class="btn del'+(armed===k.id?' arm':'')+'" data-del="'+k.id+'">'+(armed===k.id?'Apagar?':'×')+'</button></td></tr>'});
-    h+='<tr '+pc+'><td colspan="9"><button class="btn add" data-add="'+p.id+'" data-where="t">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></td></tr>';
+    h+='<tr '+pc+'><td colspan="10"><button class="btn add" data-add="'+p.id+'" data-where="t">+ Tarefa na '+esc(p.name.split(' · ')[0])+'</button></td></tr>';
   });
   h+='</tbody></table></div></section>';
   app.innerHTML=h;
   if(focusAfter){var fe=document.getElementById(focusAfter);focusAfter=null;if(fe){fe.focus();try{fe.select()}catch(_){};fe.scrollIntoView({block:'center'})}}
+  if(movedId){var tr=document.getElementById('ph-'+movedId);movedId=null;tr=tr&&tr.closest('tr');if(tr){tr.classList.add('moved');setTimeout(function(){tr.classList.remove('moved')},1600)}}
 }
 function setSave(m){saveMsg=m;var el=document.getElementById('save');if(el)el.textContent=m}
 function doSave(){timer=null;setSave('A guardar…');return window.PLANO.save(S).then(setSave,function(e){setSave(e.message);throw e})}
@@ -119,6 +121,7 @@ app.addEventListener('click',function(e){
 app.addEventListener('change',function(e){var el=e.target,id=el.dataset.id,f=el.dataset.f;if(!id||!f)return;var k=byId(id);if(!k)return;
   var v=el.value.trim();
   if(f==='owner'){k.owner=v;changed();return}
+  if(f==='phase'){if(!phase(v)||v===k.phase)return;k.phase=v;focusAfter='ph-'+id;movedId=id;changed();return}
   if(f==='notes'){k.notes=el.value.replace(/\s+$/,'');changed();return}
   if(f==='pct'){var n=Math.round(+v);if(v===''||isNaN(n)){render();return}setPct(k,Math.max(0,Math.min(100,n)));changed();return}
   if(f==='realStart'||f==='realEnd'){k[f]=v;if(k.realStart&&k.realEnd&&k.realEnd<k.realStart){if(f==='realStart')k.realEnd=v;else k.realStart=v}

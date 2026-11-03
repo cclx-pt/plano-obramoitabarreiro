@@ -167,3 +167,11 @@ th.c-notes{width:260px}
 td.c-notes{min-width:220px}
 textarea.in.notes{display:block;resize:vertical;min-height:32px;font:13px/1.35 var(--f-body);field-sizing:content;max-height:9em}
 .g-note{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--f-body);font-style:italic}
+
+/* Mover tarefas entre fases */
+table{min-width:1520px}
+th.c-phase{width:110px}
+td.c-phase select.in{min-width:96px;font-weight:600;color:var(--pc)}
+tr.moved td{animation:moved 1.6s ease-out}
+@keyframes moved{0%,40%{background:color-mix(in srgb,var(--pc) 18%,var(--surface))}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){tr.moved td{animation:none}}
