@@ -205,8 +205,6 @@ tr.moved td{animation:moved 1.6s ease-out}
 /* Área, apagar no Gantt, ocultar colunas */
 :root{--lw:1150px}
 @media (max-width:640px){:root{--lw:170px}}
-.gantt.no-cols{--lw:300px}
-@media (max-width:640px){.gantt.no-cols{--lw:170px}}
 .gantt.no-cols .g-dt{display:none}
 .g-dt.g-ar{flex-basis:110px;text-align:left}
 .g-dt.g-del{flex-basis:30px;position:relative;text-align:right}
@@ -218,3 +216,29 @@ table{min-width:1640px}
 td.c-area .in{min-width:120px}
 td .in[data-f="owner"]{min-width:140px}
 td.c-phase select.in{min-width:100px}
+
+/* Nome fixo à esquerda; colunas de edição deslocam-se com o calendário */
+:root{--nw:300px;--cw:878px}
+@media (max-width:640px){:root{--nw:170px;--cw:0px}}
+.gantt{--lw:calc(var(--nw) + var(--cw))}
+.gantt.no-cols{--cw:0px}
+.g-left{flex:0 0 var(--nw);width:var(--nw)}
+.g-cols{flex:0 0 var(--cw);width:var(--cw);box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:6px 10px;border-right:1px solid var(--line);background:var(--surface);min-width:0}
+.g-head .g-cols{border-bottom:1px solid var(--line)}
+.g-phase .g-cols{background:color-mix(in srgb,var(--pc) 9%,var(--surface))}
+.gantt.no-cols .g-cols{display:none}
+@media (max-width:640px){.g-cols{display:none}}
+.g-cols .g-dt{flex-shrink:0}
+
+.g-head .g-cols .g-dt{text-transform:uppercase}
+/* Copiar tarefa */
+:root{--cw:914px}
+@media (max-width:640px){:root{--cw:0px}}
+.g-dt.g-del{flex-basis:62px;display:flex;justify-content:flex-end;gap:4px}
+td.c-act{white-space:nowrap}
+td.c-act .btn{margin-left:4px}
+.btn.dup{width:26px;height:24px;padding:0;position:relative;vertical-align:middle;color:var(--muted)}
+.btn.dup::before{content:"";position:absolute;inset:0;margin:auto;width:13px;height:13px;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 0h11v11H5zM7 2v7h7V2zM0 5h3v2H2v7h7v-1h2v3H0z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 0h11v11H5zM7 2v7h7V2zM0 5h3v2H2v7h7v-1h2v3H0z'/%3E%3C/svg%3E") center/contain no-repeat}
+.btn.dup:hover{color:var(--ink)}
