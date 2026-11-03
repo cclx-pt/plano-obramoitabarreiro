@@ -346,19 +346,6 @@
    "area": ""
   },
   {
-   "id": "f3-som",
-   "phase": "f3",
-   "name": "Afinar o som",
-   "start": "2026-12-15",
-   "end": "2026-12-17",
-   "pct": 0,
-   "realStart": "",
-   "realEnd": "2026-12-17",
-   "owner": "",
-   "notes": "",
-   "area": ""
-  },
-  {
    "id": "f3-testes",
    "phase": "f3",
    "name": "Testes finais",
@@ -468,22 +455,7 @@
    "before": "f3-limpeza",
    "after": "f3-decoracao",
    "why": "Decoração só com a sala limpa."
-  },
-  {
-   "before": "f3-teto",
-   "after": "f3-som",
-   "why": "O teto altera a acústica: afinar o som depois."
-  },
-  {
-   "before": "f3-alcatifa",
-   "after": "f3-som",
-   "why": "A alcatifa altera a acústica: afinar o som depois."
-  },
-  {
-   "before": "f3-som",
-   "after": "f3-testes",
-   "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:59:25Z"
+ "updatedAt": "2026-11-03T17:59:36Z"
 }
