@@ -74,7 +74,7 @@
    "name": "Testar fixação do teto",
    "start": "2026-10-14",
    "end": "2026-10-16",
-   "pct": 100,
+   "pct": 0,
    "realStart": "",
    "realEnd": "",
    "owner": "Ruben",
@@ -470,5 +470,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-02T15:14:17Z"
+ "updatedAt": "2026-11-03T13:34:11Z"
 }
