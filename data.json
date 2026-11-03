@@ -207,10 +207,10 @@
    "phase": "f2",
    "name": "Pinturas barrar e lixar sala Mamãs + Corredor + Sala multiusos",
    "start": "2026-11-09",
-   "end": "2026-11-27",
+   "end": "2026-11-13",
    "pct": 0,
    "realStart": "",
-   "realEnd": "2026-11-27",
+   "realEnd": "2026-11-13",
    "owner": "",
    "notes": "",
    "area": "Pintura"
@@ -535,5 +535,5 @@
    "why": "Decoração só com a sala limpa."
   }
  ],
- "updatedAt": "2026-11-03T21:29:39Z"
+ "updatedAt": "2026-11-03T21:29:42Z"
 }
