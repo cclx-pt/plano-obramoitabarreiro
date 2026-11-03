@@ -246,10 +246,10 @@
    "phase": "f2",
    "name": "Limpeza de fim de fase",
    "start": "2026-11-28",
-   "end": "2026-11-30",
+   "end": "2026-11-28",
    "pct": 0,
    "realStart": "2026-11-28",
-   "realEnd": "2026-11-30",
+   "realEnd": "2026-11-28",
    "owner": "",
    "notes": "",
    "area": ""
@@ -485,5 +485,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:59:20Z"
+ "updatedAt": "2026-11-03T13:59:25Z"
 }
