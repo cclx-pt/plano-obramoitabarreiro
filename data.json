@@ -155,10 +155,10 @@
    "phase": "f2",
    "name": "Passar cabos para o suporte do teto",
    "start": "2026-11-02",
-   "end": "2026-11-11",
+   "end": "2026-11-20",
    "pct": 0,
    "realStart": "",
-   "realEnd": "2026-11-11",
+   "realEnd": "2026-11-20",
    "owner": "",
    "notes": "",
    "area": ""
@@ -503,5 +503,5 @@
    "why": "Testes finais com o som já afinado."
   }
  ],
- "updatedAt": "2026-11-03T13:57:10Z"
+ "updatedAt": "2026-11-03T13:57:19Z"
 }
